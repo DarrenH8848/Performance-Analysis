@@ -1,7 +1,6 @@
 import pandas as pd
 import numpy as np
-from .Constant import ANNUALIZATION_FACTORS, DAYS_PER_YEAR
-from .Constant import DAILY, WEEKLY, MONTHLY, QUARTERLY, YEARLY
+from .Constant import *
 
 
 def AnnualizedFactor(period):
@@ -29,6 +28,15 @@ def AnnualizedReturn(returns, period = DAILY, logreturn = False):
 
     return result
     
+def AnnualizedSD(returns, period = DAILY):
+    returns.dropna(how = 'any', inplace = True)
+    if len(returns) < 1:
+        return np.nan
+    
+    annual_factor = AnnualizedFactor(period)
+    result = np.std(returns, axis = 0 ) * np.sqrt(annual_factor)
+
+    return result
 
 # df = pd.read_csv('./out/matrix_return_data.csv')
 # df.set_index(['Date'],inplace=True)
