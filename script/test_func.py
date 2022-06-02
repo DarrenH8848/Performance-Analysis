@@ -1,5 +1,3 @@
-from operator import index
-from re import S
 import pytest 
 import pandas as pd
 import numpy as np
@@ -169,6 +167,17 @@ def test_AverageDrawDown(x, y, expected):
         tm.assert_series_equal(avg_drawdown, expected, check_dtype = False, atol = MAXERROR)
 
 
-print(Performance.AverageDrawDown(daily_returns_matrix_withnan, False))
-
+matrix_return_data = pd.read_csv('./out/matrix_return_data.csv')
+matrix_return_data.set_index(['Date'],inplace=True)
+single_return_data = pd.read_csv('./out/single_return_data.csv')
+single_return_data.set_index(['Date'],inplace=True)
+a = single_return_data.iloc[:,0]
+asset1 = [np.nan, 1., 10., -4., 2., 3., 2., 1., -10.]
+asset2 = [np.nan, np.nan, np.nan, np.nan, np.nan, np.nan, np.nan, 0.8, 0.8]
+b = pd.DataFrame(
+    np.array([asset1, asset2]).T / 100, columns = ['asset1', 'asset2'],
+    index = pd.date_range('2000-1-30', periods=9, freq='D'))
+c = pd.Series(
+    np.array([np.nan, np.nan, np.nan, np.nan, np.nan, np.nan, np.nan, -0.8, 0.9]) / 100,
+    index=pd.date_range('2000-1-30', periods=9, freq='D'))
 
