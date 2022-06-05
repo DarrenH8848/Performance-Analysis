@@ -85,6 +85,7 @@ def annualized_sd(returns, period = DAILY):
     
     if isinstance(returns, pd.DataFrame):
         result[returns_length < 2] = np.nan
+        result = pd.Series(result, index = returns.columns)
     elif returns_length < 2:
         result = np.nan
 
@@ -164,6 +165,7 @@ def average_drawdown(returns, logreturn = False):
         result = pd.Series(index = drawdown_data.index)
         for j in range(len(drawdown_data)):
             result[j] = np.nanmean(drawdown_data[:j+1])
+    
     return result
     
 def max_drawdown(returns, logreturn = False):
@@ -440,12 +442,16 @@ def capm_beta(returns, bench_returns):
     else:
         bench_returns = pd.DataFrame(bench_returns.iloc[:,0])
 
-    if isinstance(returns, pd.Series):
-        returns = pd.DataFrame(returns)
+    return_data = returns.copy()
 
-    benchmark = np.where(np.isnan(returns), np.nan, bench_returns)
+    if isinstance(return_data, pd.Series):
+        return_data = pd.DataFrame(return_data)
+        if len(return_data) < 1:
+            return np.nan
+
+    benchmark = np.where(np.isnan(return_data), np.nan, bench_returns)
     benchmark_residual = benchmark - np.nanmean(benchmark, axis = 0)
-    covariance = np.nanmean(benchmark_residual * returns, axis = 0)
+    covariance = np.nanmean(benchmark_residual * return_data, axis = 0)
     benchmark_var = np.nanmean(np.square(benchmark_residual), axis = 0)
     result = covariance / benchmark_var
 
@@ -482,18 +488,21 @@ def capm_alpha(returns, bench_returns, period = DAILY, risk_free = 0, beta = Non
         bench_returns = pd.DataFrame(bench_returns.iloc[:,0])
         # benchmark = pd.DataFrame(np.where(np.isnan(returns), np.nan, bench_returns), index = bench_returns.index, columns = bench_returns.columns)
     
-    benchmark = np.where(np.isnan(returns), np.nan, bench_returns)
+    return_data = returns.copy()
 
-    if isinstance(returns, pd.Series):
-        returns = pd.DataFrame(returns)
+    if isinstance(return_data, pd.Series):
+        return_data = pd.DataFrame(return_data)
+        if len(return_data) < 1:
+            return np.nan
 
     if beta is None:
         beta = capm_beta(returns, bench_returns)
 
+    benchmark = np.where(np.isnan(return_data), np.nan, bench_returns)
     annual_factor = _annualized_factor(period)
-    adj_returns = _adjust_returns(returns, risk_free)
+    adj_returns = _adjust_returns(return_data, risk_free)
     adj_bench_returns = _adjust_returns(benchmark, risk_free)
-    alphas = adj_returns - (beta * adj_bench_returns)
+    alphas = adj_returns - (np.array(beta) * adj_bench_returns)
     result = (np.nanmean(alphas, axis = 0) + 1) ** annual_factor - 1
 
     if isinstance(returns, pd.DataFrame):
@@ -503,7 +512,7 @@ def capm_alpha(returns, bench_returns, period = DAILY, risk_free = 0, beta = Non
 
     return result
 
-def treynor_ratio(returns, bench_returns, period = DAILY, risk_free = 0):
+def treynor_ratio(returns, bench_returns, period = DAILY, risk_free = 0.0):
     """
     Calculate the treynor ratio
 
@@ -527,8 +536,6 @@ def treynor_ratio(returns, bench_returns, period = DAILY, risk_free = 0):
 
     if isinstance(returns, pd.DataFrame):
         result = pd.Series(result, index = returns.columns)
-    else:
-        result = result.item()
 
     return result
 
@@ -626,14 +633,17 @@ def conditional_value_at_risk(returns, significance_level = 0.05):
         float, pd.Series: CVaR of each time series.
          If input returns is pd.Dataframe, you will get output in pd.Series;
          If input returns is pd.Series, you will get output in float.
-    """    
+    """ 
+
     if isinstance(returns, pd.DataFrame):
-        var = value_at_risk(returns, significance_level)
+        return_length = returns.count(axis = 0)
+        index = ((return_length - 1) * significance_level).astype(int)
         result = pd.Series(index = returns.columns, dtype = float)
         for asset in returns.columns:
-            result[asset] = returns.loc[returns[asset] < var[asset],asset].mean()
+            result[asset] = np.mean(np.partition(returns[asset], index[asset])[:index[asset] + 1])
     else:
-        var = value_at_risk(returns, significance_level)
-        result = returns[returns < var].mean()
+        return_length = returns.count()
+        index = int((return_length - 1) * significance_level)
+        result = np.mean(np.partition(returns, index)[:index + 1])
     
     return result
