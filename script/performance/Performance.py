@@ -60,7 +60,7 @@ def annualized_return(returns, period = DAILY, logreturn = False):
     
 def annualized_sd(returns, period = DAILY):
     """
-    Calculate the nannualized standard deviation
+    Calculate the annualized standard deviation
 
     Args:
         returns (pd.Series, pd.Dataframe): Periodical returns time series data.
@@ -647,3 +647,76 @@ def conditional_value_at_risk(returns, significance_level = 0.05):
         result = np.mean(np.partition(returns, index)[:index + 1])
     
     return result
+
+def performance_dashboard(*args, **kwargs):
+    """
+    *args : performance indicators selection
+    *kwargs : pass arguments of each function you select
+    
+    indicators = {
+        0 : annualized_return,
+        1 : annualized_sd,
+        2 : max_drawdown,
+        3 : sharpe_ratio,
+        4 : calmar_ratio,
+        5 : burke_ratio,
+        6 : downside_risk,
+        7 : sortino_ratio,
+        8 : tracking_error,
+        9 : information_ratio,
+        10 : capm_beta,
+        11 : capm_alpha,
+        12 : treynor_ratio,
+        13 : skewness,
+        14 : kurtosis,
+        15 : value_at_risk,
+        16 : conditional_value_at_risk
+    }
+
+    Returns:
+        pd.DataFrame, pd.Series: 
+         If input returns is pd.Dataframe, you will get output in pd.Dataframe;
+         If input returns is pd.Series, you will get output in pd.Series.
+    """    
+    indicators = {
+        0 : annualized_return,
+        1 : annualized_sd,
+        2 : max_drawdown,
+        3 : sharpe_ratio,
+        4 : calmar_ratio,
+        5 : burke_ratio,
+        6 : downside_risk,
+        7 : sortino_ratio,
+        8 : tracking_error,
+        9 : information_ratio,
+        10 : capm_beta,
+        11 : capm_alpha,
+        12 : treynor_ratio,
+        13 : skewness,
+        14 : kurtosis,
+        15 : value_at_risk,
+        16 : conditional_value_at_risk
+    }
+    method_list = []
+    for keys in kwargs:
+        if isinstance(kwargs[keys]["returns"], pd.DataFrame):
+            result = pd.DataFrame()
+        if isinstance(kwargs[keys]["returns"], pd.Series):
+            result = pd.Series()
+        break
+    for num in args:
+        method_list.append(indicators.get(num))
+    for method in method_list:
+        function_name = method.__name__
+        parameters = kwargs[function_name]
+        result[function_name] = method(**parameters)
+    return result
+
+
+    
+
+
+
+
+
+
