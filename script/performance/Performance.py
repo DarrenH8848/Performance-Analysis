@@ -1,3 +1,5 @@
+from operator import index
+from matplotlib.pyplot import axis
 import pandas as pd
 import numpy as np
 from .Constant import ANNUALIZATION_FACTORS, DAYS_PER_YEAR
@@ -648,6 +650,120 @@ def conditional_value_at_risk(returns, significance_level = 0.05):
     
     return result
 
+def omega_ratio(returns, threshold = 0.0, annualization = DAYS_PER_YEAR):
+    """
+    calculate the omega ratio
+
+    Args:
+        returns (pd.Series, pd.DataFrame): Returns time series data.
+        threshold (float, optional): a threshold that partitions the returns to desirable (gain) and undesirable (loss)
+         Defaults to 0.0.
+        annualization (int, optional): Factor used to convert the required_return into a daily value.
+         Defaults to 252. 
+    
+    Returns:
+        float, pd.Series: omega ratio of each time series.
+         If input returns is pd.Dataframe, you will get output in pd.Series;
+         If input returns is pd.Series, you will get output in float.
+    """    
+    if annualization == 1:
+        return_threshold = threshold
+    elif threshold <= -1:
+        return np.nan
+    else:
+        return_threshold = (1 + threshold) ** (1. / annualization) - 1
+    
+    returns_minus_thresh = _adjust_returns(returns, return_threshold)
+    thresh_minus_returns = -1 * returns_minus_thresh
+
+    num = np.nansum(returns_minus_thresh[returns_minus_thresh > 0], axis = 0)
+    den = np.nansum(thresh_minus_returns[thresh_minus_returns > 0], axis = 0)
+    result = num / den
+
+    if isinstance(returns, pd.DataFrame):
+        result = pd.Series(result, index = returns.columns)
+        result = result.replace([np.inf, -np.inf], np.nan)
+    elif result.item() in [np.inf, -np.inf]:
+        result = np.nan
+    else:
+        result = result.item()
+
+    return result
+
+def tail_dependence(returns, bench_returns, threshold = 0.05, uol = "lower"):
+    """
+    calculate the tail dependence coefficient
+
+    Args:
+        returns (pd.Series, pd.DataFrame): Returns time series data.
+        bench_returns (pd.Series, pd.DataFrame): Returns time series data of benchmark asset.
+        threshold (float, optional): The threshold that determines the extreme value. Defaults to 0.05.
+        uol (str, optional): determine upper or lower tail dependence. Defaults to "lower".
+
+    Returns:
+        float, pd.Series: tail dependence coefficient of each time series.
+         If input returns is pd.Dataframe, you will get output in pd.Series;
+         If input returns is pd.Series, you will get output in float.
+    """    
+
+    if isinstance(bench_returns, pd.Series):
+        bench_returns = pd.DataFrame(bench_returns)
+        returns_length = returns.count()
+    else:
+        bench_returns = pd.DataFrame(bench_returns.iloc[:,0])
+        returns_length = returns.count(axis = 0)
+
+    return_data = returns.copy()
+    
+    if isinstance(return_data, pd.Series):
+        return_data = pd.DataFrame(return_data)
+        if len(return_data) < 1:
+            return np.nan
+
+    if isinstance(returns, pd.Series):
+        benchmark = pd.DataFrame(
+                np.where(np.isnan(return_data), np.nan, bench_returns),
+                index = return_data.index,
+                columns = return_data.columns).iloc[:,0]
+    else:
+        benchmark = pd.DataFrame(
+                np.where(np.isnan(return_data), np.nan, bench_returns),
+                index = return_data.index,
+                columns = return_data.columns)
+    
+    var_i = value_at_risk(returns, threshold)
+    var_j = value_at_risk(benchmark, threshold)
+    if isinstance(returns, pd.Series):
+        data = pd.concat([return_data,benchmark], axis = 1)
+        joint_prob = (1 / returns_length) * len(data.loc[(data.iloc[:,0] <= var_i) & (data.iloc[:,1] <= var_j)])
+        margin_prob = int(round(threshold * returns_length)) / returns_length
+    else:
+        joint_prob = pd.Series()
+        for asset in return_data.columns:
+            data = pd.concat([return_data[asset],benchmark[asset]], axis = 1)
+            joint_prob[asset] = (1 / returns_length[asset]) * len(data.loc[(data.iloc[:,0] <= var_i[asset]) & (data.iloc[:,1] <= var_j[asset])])
+            margin_prob = int(round(threshold * returns_length[asset])) / returns_length[asset]
+
+
+    # return_len = len(return_i)
+    # var_i = value_at_risk(return_i, threshold)
+    # var_j = value_at_risk(return_j, threshold)
+    # data = pd.concat(return_i, return_j, axis = 1)
+    # joint_prob = (1 / return_len) * len(data.loc[(data.iloc[:,0] <= var_i) & (data.iloc[:,1] <= var_j)])
+    # margin_prob = int(round(threshold * return_len)) / return_len
+
+    if uol == "lower":
+        result = joint_prob / margin_prob
+    if uol == "upper":
+        result = (1 - 2 * margin_prob + joint_prob) / (1 - margin_prob)
+
+    if isinstance(result, pd.Series):
+        result = result.replace([np.inf, -np.inf], np.nan)
+    elif result in [np.inf, -np.inf]:
+        result = np.nan
+
+    return result
+
 def performance_dashboard(*args, **kwargs):
     """
     *args : performance indicators selection
@@ -671,6 +787,8 @@ def performance_dashboard(*args, **kwargs):
         14 : kurtosis,
         15 : value_at_risk,
         16 : conditional_value_at_risk
+        17 : omega_ratio
+        18 : tail_dependence
     }
 
     Returns:
@@ -695,7 +813,9 @@ def performance_dashboard(*args, **kwargs):
         13 : skewness,
         14 : kurtosis,
         15 : value_at_risk,
-        16 : conditional_value_at_risk
+        16 : conditional_value_at_risk,
+        17 : omega_ratio,
+        18 : tail_dependence
     }
     method_list = []
     for keys in kwargs:

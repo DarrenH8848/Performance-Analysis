@@ -1,4 +1,3 @@
-from ast import arg
 import pytest 
 import pandas as pd
 import numpy as np
@@ -85,6 +84,12 @@ upward_returns_2 = pd.Series(
 upward_return_matrix = pd.DataFrame({
     'asset1': upward_returns_1,
     'asset2': upward_returns_2})
+
+return_benchmark = pd.Series(
+        [-0.00171614, 0.01322056, 0.03063862, -0.01422057, -0.00489779,
+        0.01268925, -0.03357711, 0.01797036, -0.02658932, 0.01283923] * 10,
+        index=pd.date_range('2000-1-30', periods=100, freq='D')
+    )
 
 
 asset1 = [-0.00171614, 0.01322056, 0.03063862, -0.01422057, -0.00489779,
@@ -342,6 +347,24 @@ parameters = {
             (upward_return_matrix, 0.05, 
             list_to_series([0.01181818181818182, -0.09595959595959595])),
         ],
+    "omega_params" : [
+            (empty_returns, 0.0, Constant.DAYS_PER_YEAR, np.nan),
+            (one_return, 0.0, Constant.WEEKS_PER_YEAR, np.nan),
+            (daily_returns, 0.0, Constant.DAYS_PER_YEAR, 1.357142857142857),
+            (daily_returns, 0.05, Constant.DAYS_PER_YEAR, 1.3451235931095717),
+            (daily_returns_matrix, 0.0, Constant.DAYS_PER_YEAR,
+            list_to_series([1.357142857142857, 1.1818181818181819])),
+            (daily_returns_matrix_withnan, 0.05, Constant.DAYS_PER_YEAR,
+            list_to_series([1.3451235931095717, 0.7164481754947586])),
+        ],
+    "tdc_params" : [
+            (empty_returns, simple_benchmark, 0.05, "lower", np.nan),
+            (one_return, one_return, 0.95, "upper", np.nan),
+            (daily_returns_matrix, simple_benchmark, 0.2, "lower",
+            list_to_series([0.5, 0.5])),
+            (daily_returns_matrix, simple_benchmark, 0.9, "upper",
+            list_to_series([1.0, 2.0]))
+        ]
 }
 
 
@@ -584,3 +607,25 @@ class TestClass:
             assert_series_equal(conditional_value_at_risk, expected, atol = MAXERROR) 
         else:
             assert_almost_equal(conditional_value_at_risk, expected, MAXERROR)
+
+    @pytest.mark.parametrize(
+        "x,y,z,expected",
+        parameters["omega_params"]
+    )
+    def test_omega_ratio(self, x, y, z, expected):
+        omega_ratio = Performance.omega_ratio(x, y, z)
+        if isinstance(x, pd.DataFrame):
+            assert_series_equal(omega_ratio, expected, atol = MAXERROR) 
+        else:
+            assert_almost_equal(omega_ratio, expected, MAXERROR)
+
+    @pytest.mark.parametrize(
+        "x,y,z,m,expected",
+        parameters["tdc_params"]
+    )
+    def test_tail_dependence(self, x, y, z, m, expected):
+        tail_dependence = Performance.tail_dependence(x, y, z, m)
+        if isinstance(x, pd.DataFrame):
+            assert_series_equal(tail_dependence, expected, atol = MAXERROR) 
+        else:
+            assert_almost_equal(tail_dependence, expected, MAXERROR)
