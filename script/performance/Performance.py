@@ -1,9 +1,9 @@
-from operator import index
-from matplotlib.pyplot import axis
+from tkinter import FIRST
 import pandas as pd
 import numpy as np
 from .Constant import ANNUALIZATION_FACTORS, DAYS_PER_YEAR
 from .Constant import DAILY, WEEKLY, MONTHLY, QUARTERLY, YEARLY
+from scipy.interpolate import InterpolatedUnivariateSpline
 
 
 def _annualized_factor(period):
@@ -764,6 +764,65 @@ def tail_dependence(returns, bench_returns, threshold = 0.05, uol = "lower"):
 
     return result
 
+def TDC(return_i, return_j, method = "FF"):
+    """
+    nonparametric estimator of TDC
+
+    Args:
+        return_i (pd.Series): Asset i returns.
+        return_j (pd.Series): Asset j returns, of the same length as return_i.
+        method (str): nonparametric estimate method, can be "FF" or "CFG",
+         default to "FF"
+
+    Returns:
+        float: nonparametric estimator of TDC
+    """    
+
+    if len(return_i) != len(return_j):
+        return np.nan
+
+    length = len(return_i)
+    ecdf_i = []
+    ecdf_j = []
+    for i in range(length):
+        df_i = (1 / (length + 1)) * return_i[return_i <= return_i.iloc[i]].count()
+        df_j = (1 / (length + 1)) * return_j[return_j <= return_j.iloc[i]].count()
+        ecdf_i.append(df_i)
+        ecdf_j.append(df_j)
+    data_i = pd.DataFrame({
+            "x" : return_i,
+            "y" : np.array(ecdf_i)
+        })
+    data_j = pd.DataFrame({
+            "x" : return_j,
+            "y" : np.array(ecdf_j)
+        })
+    data_i = data_i.sort_values(by = ['x'])
+    data_i.drop_duplicates(subset=["x"], keep = 'first', inplace = True)
+    data_j = data_j.sort_values(by = ['x'])
+    data_j.drop_duplicates(subset=["x"], keep = 'first', inplace = True)
+    spl_i = InterpolatedUnivariateSpline(data_i["x"], data_i["y"])
+    spl_j = InterpolatedUnivariateSpline(data_j["x"], data_j["y"])
+
+    splcdf_i = spl_i(return_i)
+    splcdf_j = spl_j(return_j)
+    max_list = []
+    for i in range(length):
+        max_list.append(max(splcdf_i[i], splcdf_j[i]))
+    
+    if method == "FF":    
+        result = 3 - 1 / (1 - sum(max_list)/len(max_list))
+    elif method == "CFG":
+        list_cfg = []
+        for i in range(len(max_list)):
+            y = np.log(np.sqrt(np.log(1/splcdf_i[i])*np.log(1/splcdf_j[i]))/np.log(1/(max_list[i]**2)))
+            list_cfg.append(y)
+        result = 2 - 2 * np.exp(sum(list_cfg)/len(list_cfg))
+    else:
+        result = np.nan
+        
+    return result
+
 def performance_dashboard(*args, **kwargs):
     """
     *args : performance indicators selection
@@ -786,9 +845,10 @@ def performance_dashboard(*args, **kwargs):
         13 : skewness,
         14 : kurtosis,
         15 : value_at_risk,
-        16 : conditional_value_at_risk
-        17 : omega_ratio
-        18 : tail_dependence
+        16 : conditional_value_at_risk,
+        17 : omega_ratio,
+        18 : tail_dependence,
+        19 : TDC,
     }
 
     Returns:
@@ -815,7 +875,8 @@ def performance_dashboard(*args, **kwargs):
         15 : value_at_risk,
         16 : conditional_value_at_risk,
         17 : omega_ratio,
-        18 : tail_dependence
+        18 : tail_dependence,
+        19 : TDC,
     }
     method_list = []
     for keys in kwargs:

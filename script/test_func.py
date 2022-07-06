@@ -1,3 +1,4 @@
+from turtle import pos
 import pytest 
 import pandas as pd
 import numpy as np
@@ -14,6 +15,10 @@ simple_benchmark = pd.Series(
 
 daily_returns = pd.Series(
     np.array([np.nan, 1., 10., -4., 2., 3., 2., 1., -10.]) / 100,
+    index=pd.date_range('2000-1-30', periods=9, freq='D'))
+
+daily_returns_series = pd.Series(
+    np.array([3., 1., 10., -4., 2., 3., 2., 1., -10.]) / 100,
     index=pd.date_range('2000-1-30', periods=9, freq='D'))
 
 # daily_returns = pd.Series(
@@ -364,7 +369,12 @@ parameters = {
             list_to_series([0.5, 0.5])),
             (daily_returns_matrix, simple_benchmark, 0.9, "upper",
             list_to_series([1.0, 2.0]))
-        ]
+        ],
+    "TDC_params" : [
+            (empty_returns, simple_benchmark,"FF", np.nan),
+            (daily_returns_series, negative_returns, "FF", -0.10344827586207028),
+            (daily_returns_series, negative_returns, "CFG", 0.2772697634735837)
+        ],
 }
 
 
@@ -629,3 +639,11 @@ class TestClass:
             assert_series_equal(tail_dependence, expected, atol = MAXERROR) 
         else:
             assert_almost_equal(tail_dependence, expected, MAXERROR)
+
+    @pytest.mark.parametrize(
+        "x,y,z,expected",
+        parameters["TDC_params"]
+    )
+    def test_TDC(self, x, y, z, expected):
+        tail_dependence = Performance.TDC(x, y, z)
+        assert_almost_equal(tail_dependence, expected, MAXERROR)
