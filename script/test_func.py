@@ -4,7 +4,7 @@ import pandas as pd
 import numpy as np
 from pandas.testing import assert_index_equal, assert_frame_equal, assert_series_equal
 from numpy.testing import assert_almost_equal
-from performance import Performance
+from performance.Performance import Performance
 from performance import Constant
 
 MAXERROR = 10e-5
@@ -647,3 +647,4 @@ class TestClass:
     def test_TDC(self, x, y, z, expected):
         tail_dependence = Performance.TDC(x, y, z)
         assert_almost_equal(tail_dependence, expected, MAXERROR)
+        
