@@ -1,0 +1,544 @@
+\hypertarget{classperformance__analysis_1_1_performance_1_1_performance}{}\doxysection{performance\+\_\+analysis.\+Performance.\+Performance Class Reference}
+\label{classperformance__analysis_1_1_performance_1_1_performance}\index{performance\_analysis.Performance.Performance@{performance\_analysis.Performance.Performance}}
+Inheritance diagram for performance\+\_\+analysis.\+Performance.\+Performance\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classperformance__analysis_1_1_performance_1_1_performance}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{classperformance__analysis_1_1_performance_1_1_performance_a9b07a618e475f0f4420a5b9fba52551d}{annualized\+\_\+return}} (cls, returns, period=DAILY, logreturn=False)
+\item 
+def \mbox{\hyperlink{classperformance__analysis_1_1_performance_1_1_performance_a897f9626b0574e3552c6e8e6fd5f009f}{annualized\+\_\+sd}} (cls, returns, period=DAILY)
+\item 
+def \mbox{\hyperlink{classperformance__analysis_1_1_performance_1_1_performance_a8f1bcc7ad4fa6e37cef91644b7a4e94c}{cumulative\+\_\+returns}} (cls, returns, logreturn=False)
+\item 
+def \mbox{\hyperlink{classperformance__analysis_1_1_performance_1_1_performance_aaba289adfe03f3ee2c8172ea32ea19cd}{drawdown}} (cls, returns, logreturn=False)
+\item 
+def \mbox{\hyperlink{classperformance__analysis_1_1_performance_1_1_performance_a9b0c4376b75e81624aa9d69aabef507c}{average\+\_\+drawdown}} (cls, returns, logreturn=False)
+\item 
+def \mbox{\hyperlink{classperformance__analysis_1_1_performance_1_1_performance_a96c946785285fbd599459ec9c2a387fa}{max\+\_\+drawdown}} (cls, returns, logreturn=False)
+\item 
+def \mbox{\hyperlink{classperformance__analysis_1_1_performance_1_1_performance_a7d6e2542c164b3cf910e9582182562b9}{sharpe\+\_\+ratio}} (cls, returns, risk\+\_\+free=0., logreturn=False, period=DAILY)
+\item 
+def \mbox{\hyperlink{classperformance__analysis_1_1_performance_1_1_performance_a188965a1d1cad54869b5007ea27f03af}{calmar\+\_\+ratio}} (cls, returns, period=DAILY, logreturn=False)
+\item 
+def \mbox{\hyperlink{classperformance__analysis_1_1_performance_1_1_performance_a6dbc1f8bc56794795fe4742e94180e56}{burke\+\_\+ratio}} (cls, returns, risk\+\_\+free=0, period=DAILY, logreturn=False, modified=False)
+\item 
+def \mbox{\hyperlink{classperformance__analysis_1_1_performance_1_1_performance_a675f8902919f4c91badda9393e35a8bc}{downside\+\_\+risk}} (cls, returns, required\+\_\+return=0., period=DAILY)
+\item 
+def \mbox{\hyperlink{classperformance__analysis_1_1_performance_1_1_performance_a3490bd68c9b7898c84ae4e7dc30cbfa8}{sortino\+\_\+ratio}} (cls, returns, required\+\_\+return=0, period=DAILY)
+\item 
+def \mbox{\hyperlink{classperformance__analysis_1_1_performance_1_1_performance_aab37d5a78055ddac10c13a5e92755743}{tracking\+\_\+error}} (cls, returns, bench\+\_\+returns, period=DAILY)
+\item 
+def \mbox{\hyperlink{classperformance__analysis_1_1_performance_1_1_performance_ad678812c68a139ddf2eb87ae5c7b733d}{information\+\_\+ratio}} (cls, returns, bench\+\_\+returns, period=DAILY)
+\item 
+def \mbox{\hyperlink{classperformance__analysis_1_1_performance_1_1_performance_ac24616cf3cc9e0bcb2b00a419a33d13f}{capm\+\_\+beta}} (cls, returns, bench\+\_\+returns)
+\item 
+def \mbox{\hyperlink{classperformance__analysis_1_1_performance_1_1_performance_a22514e5980f50f6a38ce83c73d82e759}{capm\+\_\+alpha}} (cls, returns, bench\+\_\+returns, period=DAILY, risk\+\_\+free=0, beta=None)
+\item 
+def \mbox{\hyperlink{classperformance__analysis_1_1_performance_1_1_performance_a49a56e28522cafa359fe1367b457f89b}{treynor\+\_\+ratio}} (cls, returns, bench\+\_\+returns, period=DAILY, risk\+\_\+free=0.\+0)
+\item 
+def \mbox{\hyperlink{classperformance__analysis_1_1_performance_1_1_performance_ac17919067f133901b72ea68dd10bff47}{skewness}} (cls, returns, method=\char`\"{}moment\char`\"{})
+\item 
+def \mbox{\hyperlink{classperformance__analysis_1_1_performance_1_1_performance_a35ba3d1cdb0d4d117db9641009609b7e}{kurtosis}} (cls, returns, method=\char`\"{}excess\char`\"{})
+\item 
+def \mbox{\hyperlink{classperformance__analysis_1_1_performance_1_1_performance_aec84c0d2804b8a5e4ee5d9e4d02f6ff7}{value\+\_\+at\+\_\+risk}} (cls, returns, significance\+\_\+level=0.\+05)
+\item 
+def \mbox{\hyperlink{classperformance__analysis_1_1_performance_1_1_performance_a4a1d8ddddbe70a440f9fd4e5e1762a03}{conditional\+\_\+value\+\_\+at\+\_\+risk}} (cls, returns, significance\+\_\+level=0.\+05)
+\item 
+def \mbox{\hyperlink{classperformance__analysis_1_1_performance_1_1_performance_a8d8e1a4d76382c17ee27b6b7bf219153}{omega\+\_\+ratio}} (cls, returns, threshold=0.\+0, annualization=DAYS\+\_\+\+PER\+\_\+\+YEAR)
+\item 
+def \mbox{\hyperlink{classperformance__analysis_1_1_performance_1_1_performance_ab570c6f9833f786fd683225ef8635911}{tail\+\_\+dependence}} (cls, returns, bench\+\_\+returns, threshold=0.\+05, uol=\char`\"{}lower\char`\"{})
+\item 
+def \mbox{\hyperlink{classperformance__analysis_1_1_performance_1_1_performance_a6950018f5a790b36d0e1c4bc5b93289e}{TDC}} (cls, return\+\_\+i, return\+\_\+j, method=\char`\"{}FF\char`\"{})
+\item 
+def \mbox{\hyperlink{classperformance__analysis_1_1_performance_1_1_performance_a9fd77a988ffa1d978c803be9837f3247}{performance\+\_\+dashboard}} (cls, $\ast$args, $\ast$$\ast$kwargs)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classperformance__analysis_1_1_performance_1_1_performance_a9b07a618e475f0f4420a5b9fba52551d}\label{classperformance__analysis_1_1_performance_1_1_performance_a9b07a618e475f0f4420a5b9fba52551d}} 
+\index{performance\_analysis.Performance.Performance@{performance\_analysis.Performance.Performance}!annualized\_return@{annualized\_return}}
+\index{annualized\_return@{annualized\_return}!performance\_analysis.Performance.Performance@{performance\_analysis.Performance.Performance}}
+\doxysubsubsection{\texorpdfstring{annualized\_return()}{annualized\_return()}}
+{\footnotesize\ttfamily def performance\+\_\+analysis.\+Performance.\+Performance.\+annualized\+\_\+return (\begin{DoxyParamCaption}\item[{}]{cls,  }\item[{}]{returns,  }\item[{}]{period = {\ttfamily DAILY},  }\item[{}]{logreturn = {\ttfamily False} }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Calculate the nannualized return
+
+Args:
+    returns (pd.Series, pd.Dataframe): Periodical returns time series data.
+    period (str, optional): Defines the periodicity of the 'returns' data.
+    Defaults to DAILY. Also can be "weekly", "monthly", "quarterly" or "yearly".
+    logreturn (bool, optional): Define the type of returns.
+    False for simple return, True for log return. Defaults to False.
+
+Returns:
+    float, pd.Series: Annualized return for each time series.
+    If input returns is pd.Dataframe, you will get output in pd.Series;
+    If input returns is pd.Series, you will get output in float.   
+\end{DoxyVerb}
+ \mbox{\Hypertarget{classperformance__analysis_1_1_performance_1_1_performance_a897f9626b0574e3552c6e8e6fd5f009f}\label{classperformance__analysis_1_1_performance_1_1_performance_a897f9626b0574e3552c6e8e6fd5f009f}} 
+\index{performance\_analysis.Performance.Performance@{performance\_analysis.Performance.Performance}!annualized\_sd@{annualized\_sd}}
+\index{annualized\_sd@{annualized\_sd}!performance\_analysis.Performance.Performance@{performance\_analysis.Performance.Performance}}
+\doxysubsubsection{\texorpdfstring{annualized\_sd()}{annualized\_sd()}}
+{\footnotesize\ttfamily def performance\+\_\+analysis.\+Performance.\+Performance.\+annualized\+\_\+sd (\begin{DoxyParamCaption}\item[{}]{cls,  }\item[{}]{returns,  }\item[{}]{period = {\ttfamily DAILY} }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Calculate the annualized standard deviation
+
+Args:
+    returns (pd.Series, pd.Dataframe): Periodical returns time series data.
+    period (str, optional): Defines the periodicity of the 'returns' data.
+    Defaults to DAILY. Also can be "weekly", "monthly", "quarterly" or "yearly".
+
+Returns:
+    float, pd.Series: Annualized standard deviation for each time series.
+    If input returns is pd.Dataframe, you will get output in pd.Series;
+    If input returns is pd.Series, you will get output in float. 
+\end{DoxyVerb}
+ \mbox{\Hypertarget{classperformance__analysis_1_1_performance_1_1_performance_a9b0c4376b75e81624aa9d69aabef507c}\label{classperformance__analysis_1_1_performance_1_1_performance_a9b0c4376b75e81624aa9d69aabef507c}} 
+\index{performance\_analysis.Performance.Performance@{performance\_analysis.Performance.Performance}!average\_drawdown@{average\_drawdown}}
+\index{average\_drawdown@{average\_drawdown}!performance\_analysis.Performance.Performance@{performance\_analysis.Performance.Performance}}
+\doxysubsubsection{\texorpdfstring{average\_drawdown()}{average\_drawdown()}}
+{\footnotesize\ttfamily def performance\+\_\+analysis.\+Performance.\+Performance.\+average\+\_\+drawdown (\begin{DoxyParamCaption}\item[{}]{cls,  }\item[{}]{returns,  }\item[{}]{logreturn = {\ttfamily False} }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}caculate the average drawdown of each time series at each time point
+
+Args:
+    returns (pd.Series, pd.DataFrame): Returns time series data.
+    logreturn (bool, optional): Define the type of returns.
+    False for simple return, True for log return. Defaults to False.
+
+Returns:
+    pd.Series, pd.DataFrame: average drawdown at each time.
+    The type of output is the same as the input returns. 
+\end{DoxyVerb}
+ \mbox{\Hypertarget{classperformance__analysis_1_1_performance_1_1_performance_a6dbc1f8bc56794795fe4742e94180e56}\label{classperformance__analysis_1_1_performance_1_1_performance_a6dbc1f8bc56794795fe4742e94180e56}} 
+\index{performance\_analysis.Performance.Performance@{performance\_analysis.Performance.Performance}!burke\_ratio@{burke\_ratio}}
+\index{burke\_ratio@{burke\_ratio}!performance\_analysis.Performance.Performance@{performance\_analysis.Performance.Performance}}
+\doxysubsubsection{\texorpdfstring{burke\_ratio()}{burke\_ratio()}}
+{\footnotesize\ttfamily def performance\+\_\+analysis.\+Performance.\+Performance.\+burke\+\_\+ratio (\begin{DoxyParamCaption}\item[{}]{cls,  }\item[{}]{returns,  }\item[{}]{risk\+\_\+free = {\ttfamily 0},  }\item[{}]{period = {\ttfamily DAILY},  }\item[{}]{logreturn = {\ttfamily False},  }\item[{}]{modified = {\ttfamily False} }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}caculate the burke ratio of each time series
+
+Args:
+    returns (pd.Series, pd.DataFrame): Returns time series data.
+    risk_free (float, optional): Risk free interest rate. Defaults to 0.
+    period (str, optional): Defines the periodicity of the 'returns' data.
+    Defaults to "daily". Also can be "weekly", "monthly", "quarterly" or "yearly".
+    logreturn (bool, optional): Define the type of returns.
+    False for simple return, True for log return. Defaults to False.
+    modified (bool, optional): Decide to calculate Burke ratio or modified Burke ratio. Defaults to False.
+
+Returns:
+    float, pd.Series: burke ratio of each time series.
+    If input returns is pd.Dataframe, you will get output in pd.Series;
+    If input returns is pd.Series, you will get output in float. 
+\end{DoxyVerb}
+ \mbox{\Hypertarget{classperformance__analysis_1_1_performance_1_1_performance_a188965a1d1cad54869b5007ea27f03af}\label{classperformance__analysis_1_1_performance_1_1_performance_a188965a1d1cad54869b5007ea27f03af}} 
+\index{performance\_analysis.Performance.Performance@{performance\_analysis.Performance.Performance}!calmar\_ratio@{calmar\_ratio}}
+\index{calmar\_ratio@{calmar\_ratio}!performance\_analysis.Performance.Performance@{performance\_analysis.Performance.Performance}}
+\doxysubsubsection{\texorpdfstring{calmar\_ratio()}{calmar\_ratio()}}
+{\footnotesize\ttfamily def performance\+\_\+analysis.\+Performance.\+Performance.\+calmar\+\_\+ratio (\begin{DoxyParamCaption}\item[{}]{cls,  }\item[{}]{returns,  }\item[{}]{period = {\ttfamily DAILY},  }\item[{}]{logreturn = {\ttfamily False} }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}caculate the calmar ratio of each time series
+
+Args:
+    returns (pd.Series, pd.DataFrame): Returns time series data.
+    period (str, optional): Defines the periodicity of the 'returns' data.
+    Defaults to "daily". Also can be "weekly", "monthly", "quarterly" or "yearly".
+    logreturn (bool, optional): Define the type of returns.
+    False for simple return, True for log return. Defaults to False.
+
+Returns:
+    float, pd.Series: calmar ratio of each time series.
+    If input returns is pd.Dataframe, you will get output in pd.Series;
+    If input returns is pd.Series, you will get output in float. 
+\end{DoxyVerb}
+ \mbox{\Hypertarget{classperformance__analysis_1_1_performance_1_1_performance_a22514e5980f50f6a38ce83c73d82e759}\label{classperformance__analysis_1_1_performance_1_1_performance_a22514e5980f50f6a38ce83c73d82e759}} 
+\index{performance\_analysis.Performance.Performance@{performance\_analysis.Performance.Performance}!capm\_alpha@{capm\_alpha}}
+\index{capm\_alpha@{capm\_alpha}!performance\_analysis.Performance.Performance@{performance\_analysis.Performance.Performance}}
+\doxysubsubsection{\texorpdfstring{capm\_alpha()}{capm\_alpha()}}
+{\footnotesize\ttfamily def performance\+\_\+analysis.\+Performance.\+Performance.\+capm\+\_\+alpha (\begin{DoxyParamCaption}\item[{}]{cls,  }\item[{}]{returns,  }\item[{}]{bench\+\_\+returns,  }\item[{}]{period = {\ttfamily DAILY},  }\item[{}]{risk\+\_\+free = {\ttfamily 0},  }\item[{}]{beta = {\ttfamily None} }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Calculate the CAPM alpha
+
+Args:
+    returns (pd.Series, pd.DataFrame): Returns time series data.
+    bench_returns (pd.Series, pd.DataFrame): Returns of the benchmark.
+    If input pd.DataFrame, let the benchmark data in the first columns.
+    period (str, optional): Defines the periodicity of the 'returns' data.
+    Defaults to "daily". Also can be "weekly", "monthly", "quarterly" or "yearly".
+    risk_free (float, optional): Risk free interest rate. Defaults to 0.
+    beta (float, optional): The beta for the given inputs, if already known.
+    Defaults to None and Will be calculated.
+
+Returns:
+    float, pd.Series: alpha of each time series.
+    If input returns is pd.Dataframe, you will get output in pd.Series;
+    If input returns is pd.Series, you will get output in float.
+\end{DoxyVerb}
+ \mbox{\Hypertarget{classperformance__analysis_1_1_performance_1_1_performance_ac24616cf3cc9e0bcb2b00a419a33d13f}\label{classperformance__analysis_1_1_performance_1_1_performance_ac24616cf3cc9e0bcb2b00a419a33d13f}} 
+\index{performance\_analysis.Performance.Performance@{performance\_analysis.Performance.Performance}!capm\_beta@{capm\_beta}}
+\index{capm\_beta@{capm\_beta}!performance\_analysis.Performance.Performance@{performance\_analysis.Performance.Performance}}
+\doxysubsubsection{\texorpdfstring{capm\_beta()}{capm\_beta()}}
+{\footnotesize\ttfamily def performance\+\_\+analysis.\+Performance.\+Performance.\+capm\+\_\+beta (\begin{DoxyParamCaption}\item[{}]{cls,  }\item[{}]{returns,  }\item[{}]{bench\+\_\+returns }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Calculate the CAPM beta
+
+Args:
+    returns (pd.Series, pd.DataFrame): Returns time series data.
+    bench_returns (pd.Series, pd.DataFrame): Returns of the benchmark.
+    If input pd.DataFrame, let the benchmark data in the first columns.
+
+Returns:
+    float, pd.Series: beta of each time series.
+    If input returns is pd.Dataframe, you will get output in pd.Series;
+    If input returns is pd.Series, you will get output in float.
+\end{DoxyVerb}
+ \mbox{\Hypertarget{classperformance__analysis_1_1_performance_1_1_performance_a4a1d8ddddbe70a440f9fd4e5e1762a03}\label{classperformance__analysis_1_1_performance_1_1_performance_a4a1d8ddddbe70a440f9fd4e5e1762a03}} 
+\index{performance\_analysis.Performance.Performance@{performance\_analysis.Performance.Performance}!conditional\_value\_at\_risk@{conditional\_value\_at\_risk}}
+\index{conditional\_value\_at\_risk@{conditional\_value\_at\_risk}!performance\_analysis.Performance.Performance@{performance\_analysis.Performance.Performance}}
+\doxysubsubsection{\texorpdfstring{conditional\_value\_at\_risk()}{conditional\_value\_at\_risk()}}
+{\footnotesize\ttfamily def performance\+\_\+analysis.\+Performance.\+Performance.\+conditional\+\_\+value\+\_\+at\+\_\+risk (\begin{DoxyParamCaption}\item[{}]{cls,  }\item[{}]{returns,  }\item[{}]{significance\+\_\+level = {\ttfamily 0.05} }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}calculate the expected shortfall
+
+Args:
+    returns (pd.Series, pd.DataFrame): Returns time series data.
+    significance_level (float, optional): significance level for calculation. Defaults to 0.05.
+
+Returns:
+    float, pd.Series: CVaR of each time series.
+    If input returns is pd.Dataframe, you will get output in pd.Series;
+    If input returns is pd.Series, you will get output in float.
+\end{DoxyVerb}
+ \mbox{\Hypertarget{classperformance__analysis_1_1_performance_1_1_performance_a8f1bcc7ad4fa6e37cef91644b7a4e94c}\label{classperformance__analysis_1_1_performance_1_1_performance_a8f1bcc7ad4fa6e37cef91644b7a4e94c}} 
+\index{performance\_analysis.Performance.Performance@{performance\_analysis.Performance.Performance}!cumulative\_returns@{cumulative\_returns}}
+\index{cumulative\_returns@{cumulative\_returns}!performance\_analysis.Performance.Performance@{performance\_analysis.Performance.Performance}}
+\doxysubsubsection{\texorpdfstring{cumulative\_returns()}{cumulative\_returns()}}
+{\footnotesize\ttfamily def performance\+\_\+analysis.\+Performance.\+Performance.\+cumulative\+\_\+returns (\begin{DoxyParamCaption}\item[{}]{cls,  }\item[{}]{returns,  }\item[{}]{logreturn = {\ttfamily False} }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}caculate the cumulative returns at each times
+
+Args:
+    returns (pd.Series, pd.DataFrame): Periodical returns time series data.
+    logreturn (bool, optional): Define the type of returns.
+    False for simple return, True for log return. Defaults to False.
+
+Returns:
+    pd.Series, pd.DataFrame: Cumulative returns at each time.
+    The type of output is the same as the input returns.
+\end{DoxyVerb}
+ \mbox{\Hypertarget{classperformance__analysis_1_1_performance_1_1_performance_a675f8902919f4c91badda9393e35a8bc}\label{classperformance__analysis_1_1_performance_1_1_performance_a675f8902919f4c91badda9393e35a8bc}} 
+\index{performance\_analysis.Performance.Performance@{performance\_analysis.Performance.Performance}!downside\_risk@{downside\_risk}}
+\index{downside\_risk@{downside\_risk}!performance\_analysis.Performance.Performance@{performance\_analysis.Performance.Performance}}
+\doxysubsubsection{\texorpdfstring{downside\_risk()}{downside\_risk()}}
+{\footnotesize\ttfamily def performance\+\_\+analysis.\+Performance.\+Performance.\+downside\+\_\+risk (\begin{DoxyParamCaption}\item[{}]{cls,  }\item[{}]{returns,  }\item[{}]{required\+\_\+return = {\ttfamily 0.},  }\item[{}]{period = {\ttfamily DAILY} }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Calculate the downside deviation below a threshold
+
+Args:
+    returns (pd.Series, pd.DataFrame): Returns time series data.
+    required_return (float, optional): Minimum acceptable return. Defaults to 0.
+    period (str, optional): Defines the periodicity of the 'returns' data.
+    Defaults to "daily". Also can be "weekly", "monthly", "quarterly" or "yearly".
+
+Returns:
+    float, pd.Series: downside deviation of each time series.
+    If input returns is pd.Dataframe, you will get output in pd.Series;
+    If input returns is pd.Series, you will get output in float. 
+\end{DoxyVerb}
+ \mbox{\Hypertarget{classperformance__analysis_1_1_performance_1_1_performance_aaba289adfe03f3ee2c8172ea32ea19cd}\label{classperformance__analysis_1_1_performance_1_1_performance_aaba289adfe03f3ee2c8172ea32ea19cd}} 
+\index{performance\_analysis.Performance.Performance@{performance\_analysis.Performance.Performance}!drawdown@{drawdown}}
+\index{drawdown@{drawdown}!performance\_analysis.Performance.Performance@{performance\_analysis.Performance.Performance}}
+\doxysubsubsection{\texorpdfstring{drawdown()}{drawdown()}}
+{\footnotesize\ttfamily def performance\+\_\+analysis.\+Performance.\+Performance.\+drawdown (\begin{DoxyParamCaption}\item[{}]{cls,  }\item[{}]{returns,  }\item[{}]{logreturn = {\ttfamily False} }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}caculate the drawdown of each time series at each time point
+
+Args:
+    returns (pd.Series, pd.DataFrame): Returns time series data.
+    logreturn (bool, optional): Define the type of returns.
+    False for simple return, True for log return. Defaults to False.
+Returns:
+    pd.Series, pd.DataFrame: drawdown at each time.
+    The type of output is the same as the input returns. 
+\end{DoxyVerb}
+ \mbox{\Hypertarget{classperformance__analysis_1_1_performance_1_1_performance_ad678812c68a139ddf2eb87ae5c7b733d}\label{classperformance__analysis_1_1_performance_1_1_performance_ad678812c68a139ddf2eb87ae5c7b733d}} 
+\index{performance\_analysis.Performance.Performance@{performance\_analysis.Performance.Performance}!information\_ratio@{information\_ratio}}
+\index{information\_ratio@{information\_ratio}!performance\_analysis.Performance.Performance@{performance\_analysis.Performance.Performance}}
+\doxysubsubsection{\texorpdfstring{information\_ratio()}{information\_ratio()}}
+{\footnotesize\ttfamily def performance\+\_\+analysis.\+Performance.\+Performance.\+information\+\_\+ratio (\begin{DoxyParamCaption}\item[{}]{cls,  }\item[{}]{returns,  }\item[{}]{bench\+\_\+returns,  }\item[{}]{period = {\ttfamily DAILY} }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Calculate the information ratio of each time series
+
+Args:
+    returns (pd.Series, pd.DataFrame): Returns time series data.
+    bench_returns (pd.Series, pd.DataFrame): Returns of the benchmark.
+    If input pd.DataFrame, let the benchmark data in the first columns.
+    period (str, optional): Defines the periodicity of the 'returns' data.
+    Defaults to "daily". Also can be "weekly", "monthly", "quarterly" or "yearly".
+
+Returns:
+    float, pd.Series: information ratio of each time series.
+    If input returns is pd.Dataframe, you will get output in pd.Series;
+    If input returns is pd.Series, you will get output in float.
+\end{DoxyVerb}
+ \mbox{\Hypertarget{classperformance__analysis_1_1_performance_1_1_performance_a35ba3d1cdb0d4d117db9641009609b7e}\label{classperformance__analysis_1_1_performance_1_1_performance_a35ba3d1cdb0d4d117db9641009609b7e}} 
+\index{performance\_analysis.Performance.Performance@{performance\_analysis.Performance.Performance}!kurtosis@{kurtosis}}
+\index{kurtosis@{kurtosis}!performance\_analysis.Performance.Performance@{performance\_analysis.Performance.Performance}}
+\doxysubsubsection{\texorpdfstring{kurtosis()}{kurtosis()}}
+{\footnotesize\ttfamily def performance\+\_\+analysis.\+Performance.\+Performance.\+kurtosis (\begin{DoxyParamCaption}\item[{}]{cls,  }\item[{}]{returns,  }\item[{}]{method = {\ttfamily \char`\"{}excess\char`\"{}} }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Calculate kurtosis of each time series
+
+Args:
+    returns (pd.Series, pd.DataFrame): Returns time series data.
+    method (str, optional): Specify the method of computation. 
+    "excess", "moment", "fisher", "sample" or "sample_excess". Defaults to "excess".
+
+Returns:
+    float, pd.Series: kurtosis of each time series.
+    If input returns is pd.Dataframe, you will get output in pd.Series;
+    If input returns is pd.Series, you will get output in float.
+\end{DoxyVerb}
+ \mbox{\Hypertarget{classperformance__analysis_1_1_performance_1_1_performance_a96c946785285fbd599459ec9c2a387fa}\label{classperformance__analysis_1_1_performance_1_1_performance_a96c946785285fbd599459ec9c2a387fa}} 
+\index{performance\_analysis.Performance.Performance@{performance\_analysis.Performance.Performance}!max\_drawdown@{max\_drawdown}}
+\index{max\_drawdown@{max\_drawdown}!performance\_analysis.Performance.Performance@{performance\_analysis.Performance.Performance}}
+\doxysubsubsection{\texorpdfstring{max\_drawdown()}{max\_drawdown()}}
+{\footnotesize\ttfamily def performance\+\_\+analysis.\+Performance.\+Performance.\+max\+\_\+drawdown (\begin{DoxyParamCaption}\item[{}]{cls,  }\item[{}]{returns,  }\item[{}]{logreturn = {\ttfamily False} }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}caculate the maximum drawdown of each time series
+
+Args:
+    returns (pd.Series, pd.DataFrame): Returns time series data.
+    logreturn (bool, optional): Define the type of returns.
+    False for simple return, True for log return. Defaults to False.
+
+Returns:
+    float, pd.Series: maximum drawdown of each time series.
+    If input returns is pd.Dataframe, you will get output in pd.Series;
+    If input returns is pd.Series, you will get output in float. 
+\end{DoxyVerb}
+ \mbox{\Hypertarget{classperformance__analysis_1_1_performance_1_1_performance_a8d8e1a4d76382c17ee27b6b7bf219153}\label{classperformance__analysis_1_1_performance_1_1_performance_a8d8e1a4d76382c17ee27b6b7bf219153}} 
+\index{performance\_analysis.Performance.Performance@{performance\_analysis.Performance.Performance}!omega\_ratio@{omega\_ratio}}
+\index{omega\_ratio@{omega\_ratio}!performance\_analysis.Performance.Performance@{performance\_analysis.Performance.Performance}}
+\doxysubsubsection{\texorpdfstring{omega\_ratio()}{omega\_ratio()}}
+{\footnotesize\ttfamily def performance\+\_\+analysis.\+Performance.\+Performance.\+omega\+\_\+ratio (\begin{DoxyParamCaption}\item[{}]{cls,  }\item[{}]{returns,  }\item[{}]{threshold = {\ttfamily 0.0},  }\item[{}]{annualization = {\ttfamily DAYS\+\_\+PER\+\_\+YEAR} }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}calculate the omega ratio
+references: Kapsos, M., Christofides, N., & Rustem, B. (2014). Worst-case robust Omega ratio. 
+                European Journal of Operational Research, 234(2), 499-507.
+
+Args:
+    returns (pd.Series, pd.DataFrame): Returns time series data.
+    threshold (float, optional): a threshold that partitions the returns to desirable (gain) and undesirable (loss)
+    Defaults to 0.0.
+    annualization (int, optional): Factor used to convert the required_return into a daily value.
+    Defaults to 252. 
+
+Returns:
+    float, pd.Series: omega ratio of each time series.
+    If input returns is pd.Dataframe, you will get output in pd.Series;
+    If input returns is pd.Series, you will get output in float.
+\end{DoxyVerb}
+ \mbox{\Hypertarget{classperformance__analysis_1_1_performance_1_1_performance_a9fd77a988ffa1d978c803be9837f3247}\label{classperformance__analysis_1_1_performance_1_1_performance_a9fd77a988ffa1d978c803be9837f3247}} 
+\index{performance\_analysis.Performance.Performance@{performance\_analysis.Performance.Performance}!performance\_dashboard@{performance\_dashboard}}
+\index{performance\_dashboard@{performance\_dashboard}!performance\_analysis.Performance.Performance@{performance\_analysis.Performance.Performance}}
+\doxysubsubsection{\texorpdfstring{performance\_dashboard()}{performance\_dashboard()}}
+{\footnotesize\ttfamily def performance\+\_\+analysis.\+Performance.\+Performance.\+performance\+\_\+dashboard (\begin{DoxyParamCaption}\item[{}]{cls,  }\item[{$\ast$}]{args,  }\item[{$\ast$$\ast$}]{kwargs }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}*args : performance indicators selection
+*kwargs : pass arguments of each function you select
+
+indicators = {
+    0 : annualized_return,
+    1 : annualized_sd,
+    2 : max_drawdown,
+    3 : sharpe_ratio,
+    4 : calmar_ratio,
+    5 : burke_ratio,
+    6 : downside_risk,
+    7 : sortino_ratio,
+    8 : tracking_error,
+    9 : information_ratio,
+    10 : capm_beta,
+    11 : capm_alpha,
+    12 : treynor_ratio,
+    13 : skewness,
+    14 : kurtosis,
+    15 : value_at_risk,
+    16 : conditional_value_at_risk,
+    17 : omega_ratio,
+    18 : tail_dependence,
+    19 : TDC,
+}
+
+Returns:
+    pd.DataFrame, pd.Series: 
+    If input returns is pd.Dataframe, you will get output in pd.Dataframe;
+    If input returns is pd.Series, you will get output in pd.Series.
+\end{DoxyVerb}
+ \mbox{\Hypertarget{classperformance__analysis_1_1_performance_1_1_performance_a7d6e2542c164b3cf910e9582182562b9}\label{classperformance__analysis_1_1_performance_1_1_performance_a7d6e2542c164b3cf910e9582182562b9}} 
+\index{performance\_analysis.Performance.Performance@{performance\_analysis.Performance.Performance}!sharpe\_ratio@{sharpe\_ratio}}
+\index{sharpe\_ratio@{sharpe\_ratio}!performance\_analysis.Performance.Performance@{performance\_analysis.Performance.Performance}}
+\doxysubsubsection{\texorpdfstring{sharpe\_ratio()}{sharpe\_ratio()}}
+{\footnotesize\ttfamily def performance\+\_\+analysis.\+Performance.\+Performance.\+sharpe\+\_\+ratio (\begin{DoxyParamCaption}\item[{}]{cls,  }\item[{}]{returns,  }\item[{}]{risk\+\_\+free = {\ttfamily 0.},  }\item[{}]{logreturn = {\ttfamily False},  }\item[{}]{period = {\ttfamily DAILY} }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}caculate the sharpe ratio of each time series
+
+Args:
+    returns (pd.Series, pd.DataFrame): Returns time series data.
+    risk_free (float, optional): Risk free interest rate. Defaults to 0.
+    logreturn (bool, optional): Define the type of returns.
+    False for simple return, True for log return. Defaults to False.
+    period (str, optional): Defines the periodicity of the 'returns' data.
+    Defaults to "daily". Also can be "weekly", "monthly", "quarterly" or "yearly".
+
+Returns:
+    float, pd.Series: sharpe ratio of each time series.
+    If input returns is pd.Dataframe, you will get output in pd.Series;
+    If input returns is pd.Series, you will get output in float. 
+\end{DoxyVerb}
+ \mbox{\Hypertarget{classperformance__analysis_1_1_performance_1_1_performance_ac17919067f133901b72ea68dd10bff47}\label{classperformance__analysis_1_1_performance_1_1_performance_ac17919067f133901b72ea68dd10bff47}} 
+\index{performance\_analysis.Performance.Performance@{performance\_analysis.Performance.Performance}!skewness@{skewness}}
+\index{skewness@{skewness}!performance\_analysis.Performance.Performance@{performance\_analysis.Performance.Performance}}
+\doxysubsubsection{\texorpdfstring{skewness()}{skewness()}}
+{\footnotesize\ttfamily def performance\+\_\+analysis.\+Performance.\+Performance.\+skewness (\begin{DoxyParamCaption}\item[{}]{cls,  }\item[{}]{returns,  }\item[{}]{method = {\ttfamily \char`\"{}moment\char`\"{}} }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Calculate skewness of each time series
+
+Args:
+    returns (pd.Series, pd.DataFrame): Returns time series data.
+    method (str, optional): Specify the method of computation. 
+    "moment", "fisher" or "sample". Defaults to "moment".
+
+Returns:
+    float, pd.Series: skewness of each time series.
+    If input returns is pd.Dataframe, you will get output in pd.Series;
+    If input returns is pd.Series, you will get output in float.
+\end{DoxyVerb}
+ \mbox{\Hypertarget{classperformance__analysis_1_1_performance_1_1_performance_a3490bd68c9b7898c84ae4e7dc30cbfa8}\label{classperformance__analysis_1_1_performance_1_1_performance_a3490bd68c9b7898c84ae4e7dc30cbfa8}} 
+\index{performance\_analysis.Performance.Performance@{performance\_analysis.Performance.Performance}!sortino\_ratio@{sortino\_ratio}}
+\index{sortino\_ratio@{sortino\_ratio}!performance\_analysis.Performance.Performance@{performance\_analysis.Performance.Performance}}
+\doxysubsubsection{\texorpdfstring{sortino\_ratio()}{sortino\_ratio()}}
+{\footnotesize\ttfamily def performance\+\_\+analysis.\+Performance.\+Performance.\+sortino\+\_\+ratio (\begin{DoxyParamCaption}\item[{}]{cls,  }\item[{}]{returns,  }\item[{}]{required\+\_\+return = {\ttfamily 0},  }\item[{}]{period = {\ttfamily DAILY} }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Calculate the sotino ratio of each time series
+
+Args:
+    returns (pd.Series, pd.DataFrame): Returns time series data.
+    required_return (float, optional): Minimum acceptable return. Defaults to 0.
+    period (str, optional): Defines the periodicity of the 'returns' data.
+    Defaults to "daily". Also can be "weekly", "monthly", "quarterly" or "yearly".
+
+Returns:
+    float, pd.Series: sortino ratio of each time series.
+    If input returns is pd.Dataframe, you will get output in pd.Series;
+    If input returns is pd.Series, you will get output in float.
+\end{DoxyVerb}
+ \mbox{\Hypertarget{classperformance__analysis_1_1_performance_1_1_performance_ab570c6f9833f786fd683225ef8635911}\label{classperformance__analysis_1_1_performance_1_1_performance_ab570c6f9833f786fd683225ef8635911}} 
+\index{performance\_analysis.Performance.Performance@{performance\_analysis.Performance.Performance}!tail\_dependence@{tail\_dependence}}
+\index{tail\_dependence@{tail\_dependence}!performance\_analysis.Performance.Performance@{performance\_analysis.Performance.Performance}}
+\doxysubsubsection{\texorpdfstring{tail\_dependence()}{tail\_dependence()}}
+{\footnotesize\ttfamily def performance\+\_\+analysis.\+Performance.\+Performance.\+tail\+\_\+dependence (\begin{DoxyParamCaption}\item[{}]{cls,  }\item[{}]{returns,  }\item[{}]{bench\+\_\+returns,  }\item[{}]{threshold = {\ttfamily 0.05},  }\item[{}]{uol = {\ttfamily \char`\"{}lower\char`\"{}} }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}calculate the tail dependence coefficient
+
+Args:
+    returns (pd.Series, pd.DataFrame): Returns time series data.
+    bench_returns (pd.Series, pd.DataFrame): Returns time series data of benchmark asset.
+    threshold (float, optional): The threshold that determines the extreme value. Defaults to 0.05.
+    uol (str, optional): determine upper or lower tail dependence. Defaults to "lower".
+
+Returns:
+    float, pd.Series: tail dependence coefficient of each time series.
+    If input returns is pd.Dataframe, you will get output in pd.Series;
+    If input returns is pd.Series, you will get output in float.
+\end{DoxyVerb}
+ \mbox{\Hypertarget{classperformance__analysis_1_1_performance_1_1_performance_a6950018f5a790b36d0e1c4bc5b93289e}\label{classperformance__analysis_1_1_performance_1_1_performance_a6950018f5a790b36d0e1c4bc5b93289e}} 
+\index{performance\_analysis.Performance.Performance@{performance\_analysis.Performance.Performance}!TDC@{TDC}}
+\index{TDC@{TDC}!performance\_analysis.Performance.Performance@{performance\_analysis.Performance.Performance}}
+\doxysubsubsection{\texorpdfstring{TDC()}{TDC()}}
+{\footnotesize\ttfamily def performance\+\_\+analysis.\+Performance.\+Performance.\+TDC (\begin{DoxyParamCaption}\item[{}]{cls,  }\item[{}]{return\+\_\+i,  }\item[{}]{return\+\_\+j,  }\item[{}]{method = {\ttfamily \char`\"{}FF\char`\"{}} }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}nonparametric estimator of TDC.
+references: Ferreira, M. S. (2013). Nonparametric estimation of the tail-dependence coefficient.
+            Frahm, G., Junker, M., & Schmidt, R. (2005). Estimating the tail-dependence coefficient: 
+                properties and pitfalls. Insurance: mathematics and Economics, 37(1), 80-100.
+
+Args:
+    return_i (pd.Series): Asset i returns.
+    return_j (pd.Series): Asset j returns, of the same length as return_i.
+    method (str): nonparametric estimate method, can be "FF" or "CFG",
+    default to "FF"
+
+Returns:
+    float: nonparametric estimator of TDC
+\end{DoxyVerb}
+ \mbox{\Hypertarget{classperformance__analysis_1_1_performance_1_1_performance_aab37d5a78055ddac10c13a5e92755743}\label{classperformance__analysis_1_1_performance_1_1_performance_aab37d5a78055ddac10c13a5e92755743}} 
+\index{performance\_analysis.Performance.Performance@{performance\_analysis.Performance.Performance}!tracking\_error@{tracking\_error}}
+\index{tracking\_error@{tracking\_error}!performance\_analysis.Performance.Performance@{performance\_analysis.Performance.Performance}}
+\doxysubsubsection{\texorpdfstring{tracking\_error()}{tracking\_error()}}
+{\footnotesize\ttfamily def performance\+\_\+analysis.\+Performance.\+Performance.\+tracking\+\_\+error (\begin{DoxyParamCaption}\item[{}]{cls,  }\item[{}]{returns,  }\item[{}]{bench\+\_\+returns,  }\item[{}]{period = {\ttfamily DAILY} }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Calculate Tracking Error of returns against a benchmark
+
+Args:
+    returns (pd.Series, pd.DataFrame): Returns time series data.
+    bench_returns (pd.Series, pd.DataFrame): Returns of the benchmark.
+    If input pd.DataFrame, let the benchmark data in the first columns.
+    period (str, optional): Defines the periodicity of the 'returns' data.
+    Defaults to "daily". Also can be "weekly", "monthly", "quarterly" or "yearly".
+
+Returns:
+    float, pd.Series: tracking error of each time series.
+    If input returns is pd.Dataframe, you will get output in pd.Series;
+    If input returns is pd.Series, you will get output in float.
+\end{DoxyVerb}
+ \mbox{\Hypertarget{classperformance__analysis_1_1_performance_1_1_performance_a49a56e28522cafa359fe1367b457f89b}\label{classperformance__analysis_1_1_performance_1_1_performance_a49a56e28522cafa359fe1367b457f89b}} 
+\index{performance\_analysis.Performance.Performance@{performance\_analysis.Performance.Performance}!treynor\_ratio@{treynor\_ratio}}
+\index{treynor\_ratio@{treynor\_ratio}!performance\_analysis.Performance.Performance@{performance\_analysis.Performance.Performance}}
+\doxysubsubsection{\texorpdfstring{treynor\_ratio()}{treynor\_ratio()}}
+{\footnotesize\ttfamily def performance\+\_\+analysis.\+Performance.\+Performance.\+treynor\+\_\+ratio (\begin{DoxyParamCaption}\item[{}]{cls,  }\item[{}]{returns,  }\item[{}]{bench\+\_\+returns,  }\item[{}]{period = {\ttfamily DAILY},  }\item[{}]{risk\+\_\+free = {\ttfamily 0.0} }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Calculate the treynor ratio
+
+Args:
+    returns (pd.Series, pd.DataFrame): Returns time series data.
+    bench_returns (pd.Series, pd.DataFrame): Returns of the benchmark.
+    If input pd.DataFrame, let the benchmark data in the first columns.
+    period (str, optional): Defines the periodicity of the 'returns' data.
+    Defaults to "daily". Also can be "weekly", "monthly", "quarterly" or "yearly".
+    risk_free (float, optional): Risk free interest rate. Defaults to 0.
+
+Returns:
+    float, pd.Series: treynor ratio of each time series.
+    If input returns is pd.Dataframe, you will get output in pd.Series;
+    If input returns is pd.Series, you will get output in float.
+\end{DoxyVerb}
+ \mbox{\Hypertarget{classperformance__analysis_1_1_performance_1_1_performance_aec84c0d2804b8a5e4ee5d9e4d02f6ff7}\label{classperformance__analysis_1_1_performance_1_1_performance_aec84c0d2804b8a5e4ee5d9e4d02f6ff7}} 
+\index{performance\_analysis.Performance.Performance@{performance\_analysis.Performance.Performance}!value\_at\_risk@{value\_at\_risk}}
+\index{value\_at\_risk@{value\_at\_risk}!performance\_analysis.Performance.Performance@{performance\_analysis.Performance.Performance}}
+\doxysubsubsection{\texorpdfstring{value\_at\_risk()}{value\_at\_risk()}}
+{\footnotesize\ttfamily def performance\+\_\+analysis.\+Performance.\+Performance.\+value\+\_\+at\+\_\+risk (\begin{DoxyParamCaption}\item[{}]{cls,  }\item[{}]{returns,  }\item[{}]{significance\+\_\+level = {\ttfamily 0.05} }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}calculate the value at risk
+
+Args:
+    returns (pd.Series, pd.DataFrame): Returns time series data.
+    significance_level (float, optional): significance level for calculation. Defaults to 0.05.
+
+Returns:
+    float, pd.Series: VaR of each time series.
+    If input returns is pd.Dataframe, you will get output in pd.Series;
+    If input returns is pd.Series, you will get output in float.
+\end{DoxyVerb}
+ 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+performance\+\_\+analysis/Performance.\+py\end{DoxyCompactItemize}

@@ -1,0 +1,95 @@
+\hypertarget{classperformance__analysis_1_1_plotting_1_1_plotting}{}\doxysection{performance\+\_\+analysis.\+Plotting.\+Plotting Class Reference}
+\label{classperformance__analysis_1_1_plotting_1_1_plotting}\index{performance\_analysis.Plotting.Plotting@{performance\_analysis.Plotting.Plotting}}
+Inheritance diagram for performance\+\_\+analysis.\+Plotting.\+Plotting\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classperformance__analysis_1_1_plotting_1_1_plotting}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{classperformance__analysis_1_1_plotting_1_1_plotting_a142d9ddf96e7346fc52d91d3128dd43c}{plot\+\_\+cum\+\_\+returns}} (cls, returns)
+\item 
+def \mbox{\hyperlink{classperformance__analysis_1_1_plotting_1_1_plotting_a87f5e1aec7daee727e8207f96c74b60b}{plot\+\_\+drawdown}} (cls, returns)
+\item 
+def \mbox{\hyperlink{classperformance__analysis_1_1_plotting_1_1_plotting_afdcbada31e9353d0264afdcdd41ec907}{plot\+\_\+cum\+\_\+return\+\_\+and\+\_\+drawdown}} (cls, returns)
+\item 
+def \mbox{\hyperlink{classperformance__analysis_1_1_plotting_1_1_plotting_a0d2dd66b0811bbec8e92ae67dc13e8df}{plot\+\_\+yearly\+\_\+return\+\_\+heatmap}} (cls, returns, show\+\_\+text=False)
+\item 
+def \mbox{\hyperlink{classperformance__analysis_1_1_plotting_1_1_plotting_a4fd3a9f765df9bbe1b98ef7db85fab37}{plot\+\_\+monthly\+\_\+return\+\_\+heatmap}} (cls, returns, show\+\_\+text=False, modify\+\_\+return=True)
+\item 
+def \mbox{\hyperlink{classperformance__analysis_1_1_plotting_1_1_plotting_a21dbe0c03ef6df6583ce6056212a7b87}{plot\+\_\+seasonal\+\_\+effect}} (cls, returns)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classperformance__analysis_1_1_plotting_1_1_plotting_afdcbada31e9353d0264afdcdd41ec907}\label{classperformance__analysis_1_1_plotting_1_1_plotting_afdcbada31e9353d0264afdcdd41ec907}} 
+\index{performance\_analysis.Plotting.Plotting@{performance\_analysis.Plotting.Plotting}!plot\_cum\_return\_and\_drawdown@{plot\_cum\_return\_and\_drawdown}}
+\index{plot\_cum\_return\_and\_drawdown@{plot\_cum\_return\_and\_drawdown}!performance\_analysis.Plotting.Plotting@{performance\_analysis.Plotting.Plotting}}
+\doxysubsubsection{\texorpdfstring{plot\_cum\_return\_and\_drawdown()}{plot\_cum\_return\_and\_drawdown()}}
+{\footnotesize\ttfamily def performance\+\_\+analysis.\+Plotting.\+Plotting.\+plot\+\_\+cum\+\_\+return\+\_\+and\+\_\+drawdown (\begin{DoxyParamCaption}\item[{}]{cls,  }\item[{}]{returns }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}plot cumulative returns and drawdown for single asset
+
+Args:
+    returns (pd.Series): single asset periodical return
+\end{DoxyVerb}
+ \mbox{\Hypertarget{classperformance__analysis_1_1_plotting_1_1_plotting_a142d9ddf96e7346fc52d91d3128dd43c}\label{classperformance__analysis_1_1_plotting_1_1_plotting_a142d9ddf96e7346fc52d91d3128dd43c}} 
+\index{performance\_analysis.Plotting.Plotting@{performance\_analysis.Plotting.Plotting}!plot\_cum\_returns@{plot\_cum\_returns}}
+\index{plot\_cum\_returns@{plot\_cum\_returns}!performance\_analysis.Plotting.Plotting@{performance\_analysis.Plotting.Plotting}}
+\doxysubsubsection{\texorpdfstring{plot\_cum\_returns()}{plot\_cum\_returns()}}
+{\footnotesize\ttfamily def performance\+\_\+analysis.\+Plotting.\+Plotting.\+plot\+\_\+cum\+\_\+returns (\begin{DoxyParamCaption}\item[{}]{cls,  }\item[{}]{returns }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}plot cumulative returns for single asset or multiple assets
+
+Args:
+    returns (pd.Series, pd.DataFrame): periodical returns
+\end{DoxyVerb}
+ \mbox{\Hypertarget{classperformance__analysis_1_1_plotting_1_1_plotting_a87f5e1aec7daee727e8207f96c74b60b}\label{classperformance__analysis_1_1_plotting_1_1_plotting_a87f5e1aec7daee727e8207f96c74b60b}} 
+\index{performance\_analysis.Plotting.Plotting@{performance\_analysis.Plotting.Plotting}!plot\_drawdown@{plot\_drawdown}}
+\index{plot\_drawdown@{plot\_drawdown}!performance\_analysis.Plotting.Plotting@{performance\_analysis.Plotting.Plotting}}
+\doxysubsubsection{\texorpdfstring{plot\_drawdown()}{plot\_drawdown()}}
+{\footnotesize\ttfamily def performance\+\_\+analysis.\+Plotting.\+Plotting.\+plot\+\_\+drawdown (\begin{DoxyParamCaption}\item[{}]{cls,  }\item[{}]{returns }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}plot drawdown for single asset or multiple assets
+
+Args:
+    returns (pd.Series, pd.DataFrame): periodical returns
+\end{DoxyVerb}
+ \mbox{\Hypertarget{classperformance__analysis_1_1_plotting_1_1_plotting_a4fd3a9f765df9bbe1b98ef7db85fab37}\label{classperformance__analysis_1_1_plotting_1_1_plotting_a4fd3a9f765df9bbe1b98ef7db85fab37}} 
+\index{performance\_analysis.Plotting.Plotting@{performance\_analysis.Plotting.Plotting}!plot\_monthly\_return\_heatmap@{plot\_monthly\_return\_heatmap}}
+\index{plot\_monthly\_return\_heatmap@{plot\_monthly\_return\_heatmap}!performance\_analysis.Plotting.Plotting@{performance\_analysis.Plotting.Plotting}}
+\doxysubsubsection{\texorpdfstring{plot\_monthly\_return\_heatmap()}{plot\_monthly\_return\_heatmap()}}
+{\footnotesize\ttfamily def performance\+\_\+analysis.\+Plotting.\+Plotting.\+plot\+\_\+monthly\+\_\+return\+\_\+heatmap (\begin{DoxyParamCaption}\item[{}]{cls,  }\item[{}]{returns,  }\item[{}]{show\+\_\+text = {\ttfamily False},  }\item[{}]{modify\+\_\+return = {\ttfamily True} }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}plot monthly return heatmap for single asset
+
+Args:
+    returns (pd.Series): single asset return\end{DoxyVerb}
+ \mbox{\Hypertarget{classperformance__analysis_1_1_plotting_1_1_plotting_a21dbe0c03ef6df6583ce6056212a7b87}\label{classperformance__analysis_1_1_plotting_1_1_plotting_a21dbe0c03ef6df6583ce6056212a7b87}} 
+\index{performance\_analysis.Plotting.Plotting@{performance\_analysis.Plotting.Plotting}!plot\_seasonal\_effect@{plot\_seasonal\_effect}}
+\index{plot\_seasonal\_effect@{plot\_seasonal\_effect}!performance\_analysis.Plotting.Plotting@{performance\_analysis.Plotting.Plotting}}
+\doxysubsubsection{\texorpdfstring{plot\_seasonal\_effect()}{plot\_seasonal\_effect()}}
+{\footnotesize\ttfamily def performance\+\_\+analysis.\+Plotting.\+Plotting.\+plot\+\_\+seasonal\+\_\+effect (\begin{DoxyParamCaption}\item[{}]{cls,  }\item[{}]{returns }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}plot seasonal effect, a bar chart showing returns in different months
+
+Args:
+    returns (pd.Series): single asset return\end{DoxyVerb}
+ \mbox{\Hypertarget{classperformance__analysis_1_1_plotting_1_1_plotting_a0d2dd66b0811bbec8e92ae67dc13e8df}\label{classperformance__analysis_1_1_plotting_1_1_plotting_a0d2dd66b0811bbec8e92ae67dc13e8df}} 
+\index{performance\_analysis.Plotting.Plotting@{performance\_analysis.Plotting.Plotting}!plot\_yearly\_return\_heatmap@{plot\_yearly\_return\_heatmap}}
+\index{plot\_yearly\_return\_heatmap@{plot\_yearly\_return\_heatmap}!performance\_analysis.Plotting.Plotting@{performance\_analysis.Plotting.Plotting}}
+\doxysubsubsection{\texorpdfstring{plot\_yearly\_return\_heatmap()}{plot\_yearly\_return\_heatmap()}}
+{\footnotesize\ttfamily def performance\+\_\+analysis.\+Plotting.\+Plotting.\+plot\+\_\+yearly\+\_\+return\+\_\+heatmap (\begin{DoxyParamCaption}\item[{}]{cls,  }\item[{}]{returns,  }\item[{}]{show\+\_\+text = {\ttfamily False} }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}plot yearly return heatmao for multiple assets
+
+Args:
+    returns (pd.DataFrame): multiple asset returns
+\end{DoxyVerb}
+ 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+performance\+\_\+analysis/Plotting.\+py\end{DoxyCompactItemize}
