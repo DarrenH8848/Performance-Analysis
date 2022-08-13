@@ -1,9 +1,10 @@
 [tool.poetry]
 name = "performance-analysis"
-version = "0.1.6"
+version = "0.1.7"
 description = "Performance indicators calculation and Time series visualization"
 license = "MIT"
 readme = "README.rst"
+repository = "https://github.com/DarrenH8848/Performance-Analysis.git"
 authors = ["DarrenH8848 <DarrenH8848@outlook.com>"]
 
 [tool.poetry.dependencies]
