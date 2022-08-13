@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "performance-analysis"
-version = "0.1.5"
+version = "0.1.6"
 description = "Performance indicators calculation and Time series visualization"
 license = "MIT"
 readme = "README.rst"
