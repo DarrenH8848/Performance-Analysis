@@ -1,5 +1,6 @@
 # TODO: hypothesis tests: stationarity, unit root, cointegration
 from numpy import apply_along_axis, array, log, nanmean, sqrt, square
+from .risk import drawdown_peak
 
 
 def kurtosis(arr_retn: array) -> array:
@@ -37,13 +38,7 @@ def index_hurst(arr_retn: array) -> array:
 
 # TODO needs draw down
 def index_pain(arr_retn: array) -> array:
-    return log(
-        (
-            arr_retn.max(axis=0, keepdims=True) - 
-            arr_retn.min(axis=0, keepdims=True)
-        ) /
-        arr_retn.std(axis=0, keepdims=True)
-        ) / log(len(arr_retn))
+    return abs(drawdown_peak(arr_retn)).mean(axis=0, keepdims=True)
 
 # TODO
 def index_smoothing(arr_retn: array) -> array:
@@ -57,23 +52,8 @@ def index_smoothing(arr_retn: array) -> array:
     
 # TODO needs draw down
 def index_ulcer(arr_retn: array) -> array:
-    return log(
-        (
-            arr_retn.max(axis=0, keepdims=True) - 
-            arr_retn.min(axis=0, keepdims=True)
-        ) /
-        arr_retn.std(axis=0, keepdims=True)
-        ) / log(len(arr_retn))
+    return sqrt(square(drawdown_peak(arr_retn)).mean(axis=0, keepdims=True))
     
-# TODO needs draw down
-def index_pain(arr_retn: array) -> array:
-    return log(
-        (
-            arr_retn.max(axis=0, keepdims=True) - 
-            arr_retn.min(axis=0, keepdims=True)
-        ) /
-        arr_retn.std(axis=0, keepdims=True)
-        ) / log(len(arr_retn))
 
 # TODO rsp
 # ! https://papers.ssrn.com/sol3/papers.cfm?abstract_id=1821643

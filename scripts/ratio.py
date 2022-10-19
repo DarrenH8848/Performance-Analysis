@@ -4,8 +4,8 @@ from numpy import (apply_along_axis, array, nanmean, nanstd, nansum, sqrt,
                    square)
 
 from .capm import beta_capm
-from .risk import downside_dev, expected_shortfall
-from .stat import kurtosis, skewness
+from .risk import downside_dev, expected_shortfall, drawdown_max
+from .stat import kurtosis, skewness, index_pain, index_ulcer
 
 
 def ratio_sharpe(
@@ -101,7 +101,7 @@ def ratio_calmar(
     arr_retn = arr_ts[:,lst_idx_retn]
     arr_bcmk = arr_ts[:,lst_idx_bcmk]
     # TODO * maxdrawdown only
-    mdd = sqrt(square(arr_retn.clip(max=0)).mean(axis=0, keepdims=True))
+    mdd = abs(drawdown_max(arr_retn))
     r_calmar = (
         arr_retn.sum(axis=0, keepdims=True) - 
         arr_bcmk.sum(axis=0, keepdims=True)
@@ -116,12 +116,13 @@ def ratio_sterling(
     arr_ts: array, 
     lst_idx_retn: list, 
     lst_idx_bcmk: list,
+    excess: float = 0.1,
     # freq_reb: float = 1.0
     ) -> array:
     arr_retn = arr_ts[:,lst_idx_retn]
     arr_bcmk = arr_ts[:,lst_idx_bcmk]
     # TODO * maxdrawdown only
-    mdd = sqrt(square(arr_retn.clip(max=0)).mean(axis=0, keepdims=True))
+    mdd = abs(drawdown_max(arr_retn)+excess)
     r_sterling = (
         arr_retn.sum(axis=0, keepdims=True) - 
         arr_bcmk.sum(axis=0, keepdims=True)
@@ -208,11 +209,12 @@ def ratio_martin(
     ) -> array:
     arr_retn = arr_ts[:,lst_idx_retn]
     # 
+    ulcer = index_ulcer(arr_retn)
     return (
         (
             arr_retn - arr_ts[:,lst_idx_bcmk]
         ).mean(axis=0, keepdims=True) /
-        arr_retn.var(axis=0, keepdims=True)
+        ulcer
         )
 
 
@@ -238,11 +240,12 @@ def ratio_pain(
     # ~ modified as larger the better
     arr_retn = arr_ts[:,lst_idx_retn]
     # 
+    pain = index_pain(arr_retn)
     return (
         (
             arr_retn - arr_ts[:,lst_idx_bcmk]
         ).mean(axis=0, keepdims=True) /
-        arr_retn.var(axis=0, keepdims=True)
+        pain
         )
     
 

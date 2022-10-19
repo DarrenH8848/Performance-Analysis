@@ -1,5 +1,5 @@
 from numpy import (apply_along_axis, array, isfinite, nanmean, nanstd,
-                   quantile, sort, sqrt, square, unique, vectorize)
+                   quantile, sort, sqrt, square, unique, vectorize, zeros, arange, expm1, maximum, exp)
 from scipy.interpolate import CubicSpline
 from scipy.special import ndtr
 from scipy.stats import norm, t
@@ -95,51 +95,47 @@ def upside_freq(
 # TODO needs draw down
 def drawdown_dev(
     arr_ts: array, 
-    lst_idx_retn: list, 
-    lst_idx_bcmk: list
     ) -> array:
-    arr = arr_ts[:,lst_idx_retn] - arr_ts[:,lst_idx_bcmk]
-    return (
-        (arr<0).sum(axis=0, keepdims=True)/
-        isfinite(arr).sum(axis=0, keepdims=True)
-        )
+    return sqrt(square(drawdown(arr_ts)).mean(axis=0, keepdims=True))
 
 # TODO needs draw down
 def drawdown_peak(
     arr_ts: array, 
-    lst_idx_retn: list, 
-    lst_idx_bcmk: list
     ) -> array:
-    arr = arr_ts[:,lst_idx_retn] - arr_ts[:,lst_idx_bcmk]
-    return (
-        (arr<0).sum(axis=0, keepdims=True)/
-        isfinite(arr).sum(axis=0, keepdims=True)
-        )
+    if  arr_ts.ndim == 1:
+        drawdownpeak = zeros(len(arr_ts))
+        peak = 0
+        for i in range(len(arr_ts)):
+            if i == 0:
+                drawdownpeak[i] = 0
+            val = 0
+            for j in arange(peak+1,i+1):
+                val += arr_ts[j]
+            if val > 0:
+                peak = i
+                drawdownpeak[i] = 0
+            else:
+                drawdownpeak[i] = expm1(val)
+        return drawdownpeak
+    else:
+        return apply_along_axis(func1d=drawdown_peak, axis=0, arr=arr_ts)
     
     
 # TODO needs draw down
 def drawdown(
     arr_ts: array, 
-    lst_idx_retn: list, 
-    lst_idx_bcmk: list
     ) -> array:
-    arr = arr_ts[:,lst_idx_retn] - arr_ts[:,lst_idx_bcmk]
-    return (
-        (arr<0).sum(axis=0, keepdims=True)/
-        isfinite(arr).sum(axis=0, keepdims=True)
-        )
-    
+    return apply_along_axis(
+            func1d=lambda x : x / maximum.accumulate(x) - 1, 
+            axis=0, 
+            arr=exp(arr_ts.cumsum(axis=0))
+            )
+
 # TODO needs draw down
 def drawdown_max(
     arr_ts: array, 
-    lst_idx_retn: list, 
-    lst_idx_bcmk: list
     ) -> array:
-    arr = arr_ts[:,lst_idx_retn] - arr_ts[:,lst_idx_bcmk]
-    return (
-        (arr<0).sum(axis=0, keepdims=True)/
-        isfinite(arr).sum(axis=0, keepdims=True)
-        )
+    return drawdown(arr_ts).min(axis=0,keepdims=True)
     
 def _fit_ppf_expect(
     vec_retn: array, 
