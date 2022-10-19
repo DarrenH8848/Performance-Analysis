@@ -28,6 +28,8 @@ def return_portfolio(arr_ts: array,
 if __name__ == '__main__':
     import logging
 
+    from numpy import isfinite
+
     from scripts import *
     logging.basicConfig(level=logging.DEBUG)
     arr = data_test.values
@@ -40,9 +42,11 @@ if __name__ == '__main__':
                         freq_reb=365.0).shape
     logging.log(level=logging.INFO, msg=tmp)
     assert tmp == (1542, 14)
+    assert isfinite(tmp).all()
     tmp = return_active(arr_ts=arr,
                         lst_idx_retn=range(N),
                         lst_idx_bcmk=range(2, N + 2),
                         freq_reb=1.0).shape
     logging.log(level=logging.INFO, msg=tmp)
     assert tmp == (1542, 14)
+    assert isfinite(tmp).all()

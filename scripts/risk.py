@@ -236,12 +236,14 @@ if __name__ == '__main__':
     logging.log(level=logging.INFO, msg='downside_dev')
     logging.log(level=logging.INFO, msg=tmp)
     assert tmp == (1, 14)
+    assert isfinite(tmp).all()
     #
     tmp = downside_var(arr_ts=arr, lst_idx_retn=range(N),
                        lst_idx_bcmk=[N]).shape
     logging.log(level=logging.INFO, msg='downside_var')
     logging.log(level=logging.INFO, msg=tmp)
     assert tmp == (1, 14)
+    assert isfinite(tmp).all()
     #
     tmp = downside_potential(arr_ts=arr,
                              lst_idx_retn=range(N),
@@ -249,12 +251,14 @@ if __name__ == '__main__':
     logging.log(level=logging.INFO, msg='downside_potential')
     logging.log(level=logging.INFO, msg=tmp)
     assert tmp == (1, 14)
+    assert isfinite(tmp).all()
     #
     tmp = downside_freq(arr_ts=arr, lst_idx_retn=range(N),
                         lst_idx_bcmk=[N]).shape
     logging.log(level=logging.INFO, msg='downside_freq')
     logging.log(level=logging.INFO, msg=tmp)
     assert tmp == (1, 14)
+    assert isfinite(tmp).all()
     #
     for method in ['hist', 'kernel', 'norm', 't']:
         tmp = value_at_risk(arr_ts=arr,
@@ -264,6 +268,7 @@ if __name__ == '__main__':
         logging.log(level=logging.INFO, msg=f'value_at_risk: {method}')
         logging.log(level=logging.INFO, msg=tmp)
         assert tmp == (1, 14)
+        assert isfinite(tmp).all()
         tmp = expected_shortfall(arr_ts=arr,
                                  lst_idx_retn=range(N),
                                  alpha=.5,
@@ -271,11 +276,13 @@ if __name__ == '__main__':
         logging.log(level=logging.INFO, msg=f'expected_shortfall: {method}')
         logging.log(level=logging.INFO, msg=tmp)
         assert tmp == (1, 14)
+        assert isfinite(tmp).all()
     #
     tmp = beta_fama(arr_ts=arr, lst_idx_retn=range(N), lst_idx_bcmk=[N]).shape
     logging.log(level=logging.INFO, msg='beta_fama')
     logging.log(level=logging.INFO, msg=tmp)
     assert tmp == (1, 14)
+    assert isfinite(tmp).all()
     #
     tmp = mean_absolute_dev(
         arr_ts=arr,
@@ -284,6 +291,7 @@ if __name__ == '__main__':
     logging.log(level=logging.INFO, msg='mean_absolute_dev')
     logging.log(level=logging.INFO, msg=tmp)
     assert tmp == (1, 14)
+    assert isfinite(tmp).all()
     #
     tmp = risk_systematic(arr_ts=arr,
                           lst_idx_retn=range(N),
@@ -292,9 +300,11 @@ if __name__ == '__main__':
     logging.log(level=logging.INFO, msg='risk_systematic')
     logging.log(level=logging.INFO, msg=tmp)
     assert tmp == (1, 14)
+    assert isfinite(tmp).all()
     #
     tmp = tracking_error(arr_ts=arr, lst_idx_retn=range(N),
                          lst_idx_bcmk=[N]).shape
     logging.log(level=logging.INFO, msg='tracking_error')
     logging.log(level=logging.INFO, msg=tmp)
     assert tmp == (1, 14)
+    assert isfinite(tmp).all()

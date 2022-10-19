@@ -1,5 +1,5 @@
 # TODO: hypothesis tests: stationarity, unit root, cointegration
-from numpy import apply_along_axis, array, log, nanmean, sqrt, square
+from numpy import array, log, nanmean, sqrt, square
 
 
 def kurtosis(arr_retn: array) -> array:
@@ -63,6 +63,8 @@ def min_TRL(arr_retn: array) -> array:
 if __name__ == '__main__':
     import logging
 
+    from numpy import isfinite
+
     from scripts import *
     logging.basicConfig(level=logging.DEBUG)
     arr = data_test.values
@@ -71,13 +73,16 @@ if __name__ == '__main__':
     logging.log(level=logging.INFO, msg='kurtosis')
     logging.log(level=logging.INFO, msg=tmp)
     assert tmp == (1, 16)
+    assert isfinite(tmp).all()
     #
     tmp = skewness(arr).shape
     logging.log(level=logging.INFO, msg='skewness')
     logging.log(level=logging.INFO, msg=tmp)
     assert tmp == (1, 16)
+    assert isfinite(tmp).all()
     #
     tmp = index_hurst(arr).shape
     logging.log(level=logging.INFO, msg='index_hurst')
     logging.log(level=logging.INFO, msg=tmp)
     assert tmp == (1, 16)
+    assert isfinite(tmp).all()

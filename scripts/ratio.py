@@ -315,6 +315,8 @@ def ratio_upsidepotential(arr_ts: array,
 if __name__ == '__main__':
     import logging
 
+    from numpy import isfinite
+
     from scripts import *
     logging.basicConfig(level=logging.DEBUG)
     arr = data_test.values
@@ -327,6 +329,8 @@ if __name__ == '__main__':
                        freq_reb=365).shape
     logging.log(level=logging.INFO, msg=tmp)
     assert tmp == (1, 14)
+    assert isfinite(tmp).all()
+
     #
     logging.log(level=logging.INFO, msg='ratio_bernadoledoit')
     tmp = ratio_bernadoledoit(arr_ts=arr,
@@ -334,17 +338,20 @@ if __name__ == '__main__':
                               lst_idx_bcmk=[N]).shape
     logging.log(level=logging.INFO, msg=tmp)
     assert tmp == (1, 14)
+    assert isfinite(tmp).all()
     #
     logging.log(level=logging.INFO, msg='ratio_burke')
     tmp = ratio_burke(arr_ts=arr, lst_idx_retn=range(N),
                       lst_idx_bcmk=[N]).shape
     logging.log(level=logging.INFO, msg=tmp)
     assert tmp == (1, 14)
+    assert isfinite(tmp).all()
     #
     logging.log(level=logging.INFO, msg='ratio_d')
     tmp = ratio_d(arr_ts=arr, lst_idx_retn=range(N)).shape
     logging.log(level=logging.INFO, msg=tmp)
     assert tmp == (1, 14)
+    assert isfinite(tmp).all()
     #
     logging.log(level=logging.INFO, msg='ratio_information')
     tmp = ratio_information(arr_ts=arr,
@@ -352,6 +359,7 @@ if __name__ == '__main__':
                             lst_idx_bcmk=[N]).shape
     logging.log(level=logging.INFO, msg=tmp)
     assert tmp == (1, 14)
+    assert isfinite(tmp).all()
     #
     logging.log(level=logging.INFO, msg='ratio_kappa')
     tmp = ratio_kappa(arr_ts=arr,
@@ -360,24 +368,28 @@ if __name__ == '__main__':
                       coeff=1.5).shape
     logging.log(level=logging.INFO, msg=tmp)
     assert tmp == (1, 14)
+    assert isfinite(tmp).all()
     #
     logging.log(level=logging.INFO, msg='ratio_kelly')
     tmp = ratio_kelly(arr_ts=arr, lst_idx_retn=range(N),
                       lst_idx_bcmk=[N]).shape
     logging.log(level=logging.INFO, msg=tmp)
     assert tmp == (1, 14)
+    assert isfinite(tmp).all()
     #
     logging.log(level=logging.INFO, msg='ratio_omega')
     tmp = ratio_omega(arr_ts=arr, lst_idx_retn=range(N),
                       lst_idx_bcmk=[N]).shape
     logging.log(level=logging.INFO, msg=tmp)
     assert tmp == (1, 14)
+    assert isfinite(tmp).all()
     #
     logging.log(level=logging.INFO, msg='ratio_prospect')
     tmp = ratio_prospect(arr_ts=arr, lst_idx_retn=range(N),
                          lst_idx_bcmk=[N]).shape
     logging.log(level=logging.INFO, msg=tmp)
     assert tmp == (1, 14)
+    assert isfinite(tmp).all()
     #
     for method in ['hist', 'kernel', 'norm', 't']:
         logging.log(level=logging.INFO, msg=f'ratio_rachev: {method}')
@@ -389,12 +401,14 @@ if __name__ == '__main__':
                            method=method).shape
         logging.log(level=logging.INFO, msg=tmp)
         assert tmp == (1, 14)
+        assert isfinite(tmp).all()
     #
     logging.log(level=logging.INFO, msg='ratio_sortino')
     tmp = ratio_sortino(arr_ts=arr, lst_idx_retn=range(N),
                         lst_idx_bcmk=[N]).shape
     logging.log(level=logging.INFO, msg=tmp)
     assert tmp == (1, 14)
+    assert isfinite(tmp).all()
     #
     logging.log(level=logging.INFO, msg='ratio_treynor')
     tmp = ratio_treynor(
@@ -405,6 +419,7 @@ if __name__ == '__main__':
     ).shape
     logging.log(level=logging.INFO, msg=tmp)
     assert tmp == (1, 14)
+    assert isfinite(tmp).all()
     #
     for method in ['capture', 'number', 'percent']:
         logging.log(level=logging.INFO, msg=f'ratio_updown: {method}')
@@ -414,6 +429,7 @@ if __name__ == '__main__':
                            method=method).shape
         logging.log(level=logging.INFO, msg=tmp)
         assert tmp == (1, 14)
+        assert isfinite(tmp).all()
     #
     logging.log(level=logging.INFO, msg='ratio_upsidepotential')
     tmp = ratio_upsidepotential(arr_ts=arr,
@@ -421,3 +437,4 @@ if __name__ == '__main__':
                                 lst_idx_bcmk=[N]).shape
     logging.log(level=logging.INFO, msg=tmp)
     assert tmp == (1, 14)
+    assert isfinite(tmp).all()

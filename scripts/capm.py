@@ -90,6 +90,8 @@ def epsilon_capm(arr_ts: array, lst_idx_retn: list, lst_idx_bcmk: list,
 if __name__ == '__main__':
     import logging
 
+    from numpy import isfinite
+
     from scripts import *
     logging.basicConfig(level=logging.DEBUG)
     arr = data_test.values
@@ -104,6 +106,7 @@ if __name__ == '__main__':
     ).shape
     logging.log(level=logging.INFO, msg=tmp)
     assert tmp == (1, 14)
+    assert isfinite(tmp).all()
     #
     for method in ['all', 'bull', 'bear']:
         logging.log(level=logging.INFO, msg=f'beta_capm: {method}')
@@ -114,6 +117,7 @@ if __name__ == '__main__':
                         method=method).shape
         logging.log(level=logging.INFO, msg=tmp)
         assert tmp == (1, 14)
+        assert isfinite(tmp).all()
     #
     logging.log(level=logging.INFO, msg='ratio_timing')
     tmp = ratio_timing(
@@ -124,6 +128,7 @@ if __name__ == '__main__':
     ).shape
     logging.log(level=logging.INFO, msg=tmp)
     assert tmp == (1, 14)
+    assert isfinite(tmp).all()
     #
     logging.log(level=logging.INFO, msg='epsilon_capm')
     tmp = epsilon_capm(
@@ -134,3 +139,4 @@ if __name__ == '__main__':
     ).shape
     logging.log(level=logging.INFO, msg=tmp)
     assert tmp == (1542, 14)
+    assert isfinite(tmp).all()
