@@ -286,8 +286,9 @@ def ratio_updown(
     # ~ modified to be a trade-off between return ~ risk
     arr_retn = arr_ts[:, lst_idx_retn]
     arr_bcmk = arr_ts[:, lst_idx_bcmk]
-    if arr_bcmk.shape[1] < 2:
-        arr_bcmk = arr_bcmk.repeat(arr_retn.shape[1], axis=1)
+    tmp_len = len(lst_idx_retn)
+    if (tmp_len > 1) and (len(lst_idx_bcmk) < 2):
+        arr_bcmk = arr_bcmk.repeat(tmp_len, axis=1)
     if method == 'capture':
         return array((*map(_ratio_updown_capture, arr_retn.T, arr_bcmk.T), ),
                      ndmin=2)
@@ -322,119 +323,127 @@ if __name__ == '__main__':
     arr = data_test.values
     N = data_test.shape[1] - 2
     #
-    logging.log(level=logging.INFO, msg='ratio_sharpe')
     tmp = ratio_sharpe(arr_ts=arr,
                        lst_idx_retn=range(N),
                        lst_idx_bcmk=[N],
-                       freq_reb=365).shape
+                       freq_reb=365)
+    assert isfinite(tmp).all()
+    tmp = tmp.shape
+    logging.log(level=logging.INFO, msg='ratio_sharpe')
     logging.log(level=logging.INFO, msg=tmp)
     assert tmp == (1, 14)
-    assert isfinite(tmp).all()
-
     #
-    logging.log(level=logging.INFO, msg='ratio_bernadoledoit')
     tmp = ratio_bernadoledoit(arr_ts=arr,
                               lst_idx_retn=range(N),
-                              lst_idx_bcmk=[N]).shape
+                              lst_idx_bcmk=[N])
+    assert isfinite(tmp).all()
+    tmp = tmp.shape
+    logging.log(level=logging.INFO, msg='ratio_bernadoledoit')
     logging.log(level=logging.INFO, msg=tmp)
     assert tmp == (1, 14)
-    assert isfinite(tmp).all()
     #
+    tmp = ratio_burke(arr_ts=arr, lst_idx_retn=range(N), lst_idx_bcmk=[N])
+    assert isfinite(tmp).all()
+    tmp = tmp.shape
     logging.log(level=logging.INFO, msg='ratio_burke')
-    tmp = ratio_burke(arr_ts=arr, lst_idx_retn=range(N),
-                      lst_idx_bcmk=[N]).shape
     logging.log(level=logging.INFO, msg=tmp)
     assert tmp == (1, 14)
-    assert isfinite(tmp).all()
     #
+    tmp = ratio_d(arr_ts=arr, lst_idx_retn=range(N))
+    assert isfinite(tmp).all()
+    tmp = tmp.shape
     logging.log(level=logging.INFO, msg='ratio_d')
-    tmp = ratio_d(arr_ts=arr, lst_idx_retn=range(N)).shape
     logging.log(level=logging.INFO, msg=tmp)
     assert tmp == (1, 14)
-    assert isfinite(tmp).all()
     #
-    logging.log(level=logging.INFO, msg='ratio_information')
     tmp = ratio_information(arr_ts=arr,
                             lst_idx_retn=range(N),
-                            lst_idx_bcmk=[N]).shape
+                            lst_idx_bcmk=[N])
+    assert isfinite(tmp).all()
+    tmp = tmp.shape
+    logging.log(level=logging.INFO, msg='ratio_information')
     logging.log(level=logging.INFO, msg=tmp)
     assert tmp == (1, 14)
-    assert isfinite(tmp).all()
     #
-    logging.log(level=logging.INFO, msg='ratio_kappa')
     tmp = ratio_kappa(arr_ts=arr,
                       lst_idx_retn=range(N),
                       lst_idx_bcmk=[N],
-                      coeff=1.5).shape
+                      coeff=1.5)
+    assert isfinite(tmp).all()
+    tmp = tmp.shape
+    logging.log(level=logging.INFO, msg='ratio_kappa')
     logging.log(level=logging.INFO, msg=tmp)
     assert tmp == (1, 14)
-    assert isfinite(tmp).all()
     #
+    tmp = ratio_kelly(arr_ts=arr, lst_idx_retn=range(N), lst_idx_bcmk=[N])
+    assert isfinite(tmp).all()
+    tmp = tmp.shape
     logging.log(level=logging.INFO, msg='ratio_kelly')
-    tmp = ratio_kelly(arr_ts=arr, lst_idx_retn=range(N),
-                      lst_idx_bcmk=[N]).shape
     logging.log(level=logging.INFO, msg=tmp)
     assert tmp == (1, 14)
-    assert isfinite(tmp).all()
     #
+    tmp = ratio_omega(arr_ts=arr, lst_idx_retn=range(N), lst_idx_bcmk=[N])
+    assert isfinite(tmp).all()
+    tmp = tmp.shape
     logging.log(level=logging.INFO, msg='ratio_omega')
-    tmp = ratio_omega(arr_ts=arr, lst_idx_retn=range(N),
-                      lst_idx_bcmk=[N]).shape
     logging.log(level=logging.INFO, msg=tmp)
     assert tmp == (1, 14)
-    assert isfinite(tmp).all()
     #
+    tmp = ratio_prospect(arr_ts=arr, lst_idx_retn=range(N), lst_idx_bcmk=[N])
+    assert isfinite(tmp).all()
+    tmp = tmp.shape
     logging.log(level=logging.INFO, msg='ratio_prospect')
-    tmp = ratio_prospect(arr_ts=arr, lst_idx_retn=range(N),
-                         lst_idx_bcmk=[N]).shape
     logging.log(level=logging.INFO, msg=tmp)
     assert tmp == (1, 14)
-    assert isfinite(tmp).all()
     #
     for method in ['hist', 'kernel', 'norm', 't']:
-        logging.log(level=logging.INFO, msg=f'ratio_rachev: {method}')
         tmp = ratio_rachev(arr_ts=arr,
                            lst_idx_retn=range(N),
                            lst_idx_bcmk=[N],
                            alpha=.1,
                            beta=.1,
-                           method=method).shape
+                           method=method)
+        assert isfinite(tmp).all()
+        tmp = tmp.shape
+        logging.log(level=logging.INFO, msg=f'ratio_rachev: {method}')
         logging.log(level=logging.INFO, msg=tmp)
         assert tmp == (1, 14)
-        assert isfinite(tmp).all()
     #
+    tmp = ratio_sortino(arr_ts=arr, lst_idx_retn=range(N), lst_idx_bcmk=[N])
+    assert isfinite(tmp).all()
+    tmp = tmp.shape
     logging.log(level=logging.INFO, msg='ratio_sortino')
-    tmp = ratio_sortino(arr_ts=arr, lst_idx_retn=range(N),
-                        lst_idx_bcmk=[N]).shape
     logging.log(level=logging.INFO, msg=tmp)
     assert tmp == (1, 14)
-    assert isfinite(tmp).all()
     #
-    logging.log(level=logging.INFO, msg='ratio_treynor')
     tmp = ratio_treynor(
         arr_ts=arr,
         lst_idx_retn=range(N),
         lst_idx_bcmk=[N],
         lst_idx_rf=[N + 1],
-    ).shape
+    )
+    assert isfinite(tmp).all()
+    tmp = tmp.shape
+    logging.log(level=logging.INFO, msg='ratio_treynor')
     logging.log(level=logging.INFO, msg=tmp)
     assert tmp == (1, 14)
-    assert isfinite(tmp).all()
     #
     for method in ['capture', 'number', 'percent']:
-        logging.log(level=logging.INFO, msg=f'ratio_updown: {method}')
         tmp = ratio_updown(arr_ts=arr,
                            lst_idx_retn=range(N),
                            lst_idx_bcmk=[N],
-                           method=method).shape
+                           method=method)
+        assert isfinite(tmp).all()
+        tmp = tmp.shape
+        logging.log(level=logging.INFO, msg=f'ratio_updown: {method}')
         logging.log(level=logging.INFO, msg=tmp)
         assert tmp == (1, 14)
-        assert isfinite(tmp).all()
     #
-    logging.log(level=logging.INFO, msg='ratio_upsidepotential')
     tmp = ratio_upsidepotential(arr_ts=arr,
                                 lst_idx_retn=range(N),
-                                lst_idx_bcmk=[N]).shape
+                                lst_idx_bcmk=[N])
+    assert isfinite(tmp).all()
+    tmp = tmp.shape
+    logging.log(level=logging.INFO, msg='ratio_upsidepotential')
     logging.log(level=logging.INFO, msg=tmp)
     assert tmp == (1, 14)
-    assert isfinite(tmp).all()

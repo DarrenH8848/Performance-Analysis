@@ -38,8 +38,9 @@ def beta_capm(arr_ts: array,
               method: str = 'all') -> array:
     arr_retn = arr_ts[:, lst_idx_retn]
     arr_bcmk = arr_ts[:, lst_idx_bcmk]
-    if arr_bcmk.shape[1] < 2:
-        arr_bcmk = arr_bcmk.repeat(arr_retn.shape[1], axis=1)
+    tmp_len = len(lst_idx_retn)
+    if (tmp_len > 1) and (len(lst_idx_bcmk) < 2):
+        arr_bcmk = arr_bcmk.repeat(tmp_len, axis=1)
     arr_rf = arr_ts[:, lst_idx_rf]
     # risk premium
     yrp = arr_retn - arr_rf
@@ -73,8 +74,9 @@ def epsilon_capm(arr_ts: array, lst_idx_retn: list, lst_idx_bcmk: list,
                  lst_idx_rf: list) -> array:
     arr_retn = arr_ts[:, lst_idx_retn]
     arr_bcmk = arr_ts[:, lst_idx_bcmk]
-    if arr_bcmk.shape[1] < 2:
-        arr_bcmk = arr_bcmk.repeat(arr_retn.shape[1], axis=1)
+    tmp_len = len(lst_idx_retn)
+    if (tmp_len > 1) and (len(lst_idx_bcmk) < 2):
+        arr_bcmk = arr_bcmk.repeat(tmp_len, axis=1)
     arr_rf = arr_ts[:, lst_idx_rf]
     # risk premium
     yrp = arr_retn - arr_rf
@@ -97,46 +99,44 @@ if __name__ == '__main__':
     arr = data_test.values
     N = data_test.shape[1] - 2
     #
+    tmp = alpha_capm(arr_ts=arr,
+                     lst_idx_retn=range(N),
+                     lst_idx_bcmk=[N],
+                     lst_idx_rf=[N + 1])
+    assert isfinite(tmp).all()
+    tmp = tmp.shape
     logging.log(level=logging.INFO, msg='alpha_capm')
-    tmp = alpha_capm(
-        arr_ts=arr,
-        lst_idx_retn=range(N),
-        lst_idx_bcmk=[N],
-        lst_idx_rf=[N + 1],
-    ).shape
     logging.log(level=logging.INFO, msg=tmp)
     assert tmp == (1, 14)
-    assert isfinite(tmp).all()
     #
     for method in ['all', 'bull', 'bear']:
-        logging.log(level=logging.INFO, msg=f'beta_capm: {method}')
         tmp = beta_capm(arr_ts=arr,
                         lst_idx_retn=range(N),
                         lst_idx_bcmk=[N],
                         lst_idx_rf=[N + 1],
-                        method=method).shape
+                        method=method)
+        assert isfinite(tmp).all()
+        tmp = tmp.shape
+        logging.log(level=logging.INFO, msg=f'beta_capm: {method}')
         logging.log(level=logging.INFO, msg=tmp)
         assert tmp == (1, 14)
-        assert isfinite(tmp).all()
     #
+    tmp = ratio_timing(arr_ts=arr,
+                       lst_idx_retn=range(N),
+                       lst_idx_bcmk=[N],
+                       lst_idx_rf=[N + 1])
+    assert isfinite(tmp).all()
+    tmp = tmp.shape
     logging.log(level=logging.INFO, msg='ratio_timing')
-    tmp = ratio_timing(
-        arr_ts=arr,
-        lst_idx_retn=range(N),
-        lst_idx_bcmk=[N],
-        lst_idx_rf=[N + 1],
-    ).shape
     logging.log(level=logging.INFO, msg=tmp)
     assert tmp == (1, 14)
-    assert isfinite(tmp).all()
     #
+    tmp = epsilon_capm(arr_ts=arr,
+                       lst_idx_retn=range(N),
+                       lst_idx_bcmk=[N],
+                       lst_idx_rf=[N + 1])
+    assert isfinite(tmp).all()
+    tmp = tmp.shape
     logging.log(level=logging.INFO, msg='epsilon_capm')
-    tmp = epsilon_capm(
-        arr_ts=arr,
-        lst_idx_retn=range(N),
-        lst_idx_bcmk=[N],
-        lst_idx_rf=[N + 1],
-    ).shape
     logging.log(level=logging.INFO, msg=tmp)
     assert tmp == (1542, 14)
-    assert isfinite(tmp).all()

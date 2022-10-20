@@ -1,10 +1,14 @@
-from numpy import (apply_along_axis, array, isfinite, nanmean, nanstd,
-                   quantile, sort, sqrt, square, unique, vectorize)
+from itertools import cycle
+
+from numpy import (apply_along_axis, array, exp, isfinite, log, maximum,
+                   nanmean, nanstd, quantile, sort, sqrt, square, unique,
+                   vectorize)
 from scipy.interpolate import CubicSpline
 from scipy.special import ndtr
 from scipy.stats import norm, t
 
 from .capm import beta_capm
+from .stat import cdf_func_kernel
 
 
 def downside_dev(arr_ts: array, lst_idx_retn: list,
@@ -205,22 +209,78 @@ def tracking_error(arr_ts: array,
     return te
 
 
-# TODO td
+def _tail_dependence_lower(vec_retn: array, vec_bcmk: array,
+                           alpha: float) -> float:
+    idx = vec_bcmk <= quantile(a=vec_bcmk, q=alpha, method='median_unbiased')
+    return ((vec_retn[idx] <= quantile(
+        a=vec_retn, q=alpha, method='median_unbiased')).sum() / idx.sum())
+
+
+def _tail_dependence_upper(vec_retn: array, vec_bcmk: array,
+                           alpha: float) -> float:
+    q = 1 - alpha
+    idx = vec_bcmk >= quantile(a=vec_bcmk, q=q, method='median_unbiased')
+    return ((vec_retn[idx] >= quantile(
+        a=vec_retn, q=q, method='median_unbiased')).sum() / idx.sum())
+
+
 def tail_dependence(arr_ts: array,
                     lst_idx_retn: list,
                     lst_idx_bcmk: list,
-                    flag_lower: bool = True,
-                    alpha: float = 1.0) -> array:
-    pass
+                    alpha: float,
+                    flag_lower: bool = True) -> array:
+    arr_retn = arr_ts[:, lst_idx_retn]
+    arr_bcmk = arr_ts[:, lst_idx_bcmk]
+    tmp_len = len(lst_idx_retn)
+    if (tmp_len > 1) and (len(lst_idx_bcmk) < 2):
+        arr_bcmk = arr_bcmk.repeat(tmp_len, axis=1)
+    if flag_lower:
+        return array((*map(_tail_dependence_lower, arr_retn.T, arr_bcmk.T,
+                           cycle([alpha])), ),
+                     ndmin=2)
+    else:
+        return array((*map(_tail_dependence_upper, arr_retn.T, arr_bcmk.T,
+                           cycle([alpha])), ),
+                     ndmin=2)
 
 
-# TODO td
+def _tail_dependence_coefficient_FF(vec_i: array, vec_j: array):
+    return 3.0 - 1.0 / (1.0 - nanmean(
+        maximum(cdf_func_kernel(vec_i)(vec_i),
+                cdf_func_kernel(vec_j)(vec_j)).clip(min=0.0, max=1.0)))
+
+
+def _tail_dependence_coefficient_CFG(vec_i: array, vec_j: array):
+    ecdf_i = cdf_func_kernel(vec_i)(vec_i)
+    ecdf_j = cdf_func_kernel(vec_j)(vec_j)
+    p_max = maximum(ecdf_i, ecdf_j).clip(min=0.0, max=1.0)
+    return 2.0 - 2.0 * exp(
+        nanmean(log(sqrt(log(ecdf_i) * log(ecdf_j)) / (-2.0 * log(p_max)))))
+
+
 def tail_dependence_coefficient(arr_ts: array,
                                 lst_idx_retn: list,
                                 lst_idx_bcmk: list,
                                 flag_lower: bool = True,
                                 method: str = "FF") -> array:
-    pass
+    arr_retn = arr_ts[:, lst_idx_retn]
+    arr_bcmk = arr_ts[:, lst_idx_bcmk]
+    tmp_len = len(lst_idx_retn)
+    if (tmp_len > 1) and (len(lst_idx_bcmk) < 2):
+        arr_bcmk = arr_bcmk.repeat(tmp_len, axis=1)
+    if flag_lower:
+        arr_retn = -arr_retn
+        arr_bcmk = -arr_bcmk
+    if method == 'FF':
+        return array(
+            (*map(_tail_dependence_coefficient_FF, arr_retn.T, arr_bcmk.T), ),
+            ndmin=2)
+    elif method == 'CFG':
+        return array(
+            (*map(_tail_dependence_coefficient_CFG, arr_retn.T, arr_bcmk.T), ),
+            ndmin=2)
+    else:
+        raise NotImplementedError
 
 
 if __name__ == '__main__':
@@ -231,80 +291,112 @@ if __name__ == '__main__':
     arr = data_test.values
     N = data_test.shape[1] - 2
     #
-    tmp = downside_dev(arr_ts=arr, lst_idx_retn=range(N),
-                       lst_idx_bcmk=[N]).shape
+    tmp = downside_dev(arr_ts=arr, lst_idx_retn=range(N), lst_idx_bcmk=[N])
+    assert isfinite(tmp).all()
+    tmp = tmp.shape
     logging.log(level=logging.INFO, msg='downside_dev')
     logging.log(level=logging.INFO, msg=tmp)
     assert tmp == (1, 14)
-    assert isfinite(tmp).all()
     #
-    tmp = downside_var(arr_ts=arr, lst_idx_retn=range(N),
-                       lst_idx_bcmk=[N]).shape
+    tmp = downside_var(arr_ts=arr, lst_idx_retn=range(N), lst_idx_bcmk=[N])
+    assert isfinite(tmp).all()
+    tmp = tmp.shape
     logging.log(level=logging.INFO, msg='downside_var')
     logging.log(level=logging.INFO, msg=tmp)
     assert tmp == (1, 14)
-    assert isfinite(tmp).all()
     #
     tmp = downside_potential(arr_ts=arr,
                              lst_idx_retn=range(N),
-                             lst_idx_bcmk=[N]).shape
+                             lst_idx_bcmk=[N])
+    assert isfinite(tmp).all()
+    tmp = tmp.shape
     logging.log(level=logging.INFO, msg='downside_potential')
     logging.log(level=logging.INFO, msg=tmp)
     assert tmp == (1, 14)
-    assert isfinite(tmp).all()
     #
-    tmp = downside_freq(arr_ts=arr, lst_idx_retn=range(N),
-                        lst_idx_bcmk=[N]).shape
+    tmp = downside_freq(arr_ts=arr, lst_idx_retn=range(N), lst_idx_bcmk=[N])
+    assert isfinite(tmp).all()
+    tmp = tmp.shape
     logging.log(level=logging.INFO, msg='downside_freq')
     logging.log(level=logging.INFO, msg=tmp)
     assert tmp == (1, 14)
-    assert isfinite(tmp).all()
     #
     for method in ['hist', 'kernel', 'norm', 't']:
         tmp = value_at_risk(arr_ts=arr,
                             lst_idx_retn=range(N),
                             alpha=.5,
-                            method=method).shape
+                            method=method)
+        assert isfinite(tmp).all()
+        tmp = tmp.shape
         logging.log(level=logging.INFO, msg=f'value_at_risk: {method}')
         logging.log(level=logging.INFO, msg=tmp)
         assert tmp == (1, 14)
-        assert isfinite(tmp).all()
         tmp = expected_shortfall(arr_ts=arr,
                                  lst_idx_retn=range(N),
                                  alpha=.5,
-                                 method=method).shape
+                                 method=method)
+        assert isfinite(tmp).all()
+        tmp = tmp.shape
         logging.log(level=logging.INFO, msg=f'expected_shortfall: {method}')
         logging.log(level=logging.INFO, msg=tmp)
         assert tmp == (1, 14)
-        assert isfinite(tmp).all()
     #
-    tmp = beta_fama(arr_ts=arr, lst_idx_retn=range(N), lst_idx_bcmk=[N]).shape
+    tmp = beta_fama(arr_ts=arr, lst_idx_retn=range(N), lst_idx_bcmk=[N])
+    assert isfinite(tmp).all()
+    tmp = tmp.shape
     logging.log(level=logging.INFO, msg='beta_fama')
     logging.log(level=logging.INFO, msg=tmp)
     assert tmp == (1, 14)
-    assert isfinite(tmp).all()
     #
     tmp = mean_absolute_dev(
         arr_ts=arr,
         lst_idx_retn=range(N),
-    ).shape
+    )
+    assert isfinite(tmp).all()
+    tmp = tmp.shape
     logging.log(level=logging.INFO, msg='mean_absolute_dev')
     logging.log(level=logging.INFO, msg=tmp)
     assert tmp == (1, 14)
-    assert isfinite(tmp).all()
     #
     tmp = risk_systematic(arr_ts=arr,
                           lst_idx_retn=range(N),
                           lst_idx_bcmk=[N],
-                          lst_idx_rf=[N + 1]).shape
+                          lst_idx_rf=[N + 1])
+    assert isfinite(tmp).all()
+    tmp = tmp.shape
     logging.log(level=logging.INFO, msg='risk_systematic')
     logging.log(level=logging.INFO, msg=tmp)
     assert tmp == (1, 14)
-    assert isfinite(tmp).all()
     #
-    tmp = tracking_error(arr_ts=arr, lst_idx_retn=range(N),
-                         lst_idx_bcmk=[N]).shape
+    tmp = tracking_error(arr_ts=arr, lst_idx_retn=range(N), lst_idx_bcmk=[N])
+    assert isfinite(tmp).all()
+    tmp = tmp.shape
     logging.log(level=logging.INFO, msg='tracking_error')
     logging.log(level=logging.INFO, msg=tmp)
     assert tmp == (1, 14)
-    assert isfinite(tmp).all()
+    #
+    for flag_lower in (True, False):
+        tmp = tail_dependence(arr_ts=arr,
+                              lst_idx_retn=range(N),
+                              lst_idx_bcmk=[N],
+                              alpha=.1,
+                              flag_lower=flag_lower)
+        assert isfinite(tmp).all()
+        tmp = tmp.shape
+        logging.log(level=logging.INFO, msg=f'tail_dependence: {flag_lower}')
+        logging.log(level=logging.INFO, msg=tmp)
+        assert tmp == (1, 14)
+        #
+    for flag_lower in (True, False):
+        for method in ['FF', 'CFG']:
+            tmp = tail_dependence_coefficient(arr_ts=arr,
+                                              lst_idx_retn=range(N),
+                                              lst_idx_bcmk=[N],
+                                              flag_lower=flag_lower,
+                                              method=method)
+            assert isfinite(tmp).all()
+            tmp = tmp.shape
+            logging.log(level=logging.INFO,
+                        msg=f'tail_dependence: {flag_lower}: {method}')
+            logging.log(level=logging.INFO, msg=tmp)
+            assert tmp == (1, 14)

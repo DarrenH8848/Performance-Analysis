@@ -35,18 +35,12 @@ if __name__ == '__main__':
     arr = data_test.values
     N = data_test.shape[1] - 2
     #
-    logging.log(level=logging.INFO, msg='return_active')
     tmp = return_active(arr_ts=arr,
                         lst_idx_retn=range(N),
                         lst_idx_bcmk=[N],
-                        freq_reb=365.0).shape
+                        freq_reb=365.0)
+    assert isfinite(tmp).all()
+    tmp = tmp.shape
+    logging.log(level=logging.INFO, msg='return_active')
     logging.log(level=logging.INFO, msg=tmp)
     assert tmp == (1542, 14)
-    assert isfinite(tmp).all()
-    tmp = return_active(arr_ts=arr,
-                        lst_idx_retn=range(N),
-                        lst_idx_bcmk=range(2, N + 2),
-                        freq_reb=1.0).shape
-    logging.log(level=logging.INFO, msg=tmp)
-    assert tmp == (1542, 14)
-    assert isfinite(tmp).all()
