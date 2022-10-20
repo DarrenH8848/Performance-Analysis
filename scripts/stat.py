@@ -1,5 +1,6 @@
 # TODO: hypothesis tests: stationarity, unit root, cointegration
-from numpy import apply_along_axis, array, log, nanmean, sqrt, square
+from numpy import apply_along_axis, array, log, nanmean, sqrt, square, arange
+from statsmodels.tsa.arima.model import ARIMA
 from .risk import drawdown_peak
 
 
@@ -41,14 +42,20 @@ def index_pain(arr_retn: array) -> array:
     return abs(drawdown_peak(arr_retn)).mean(axis=0, keepdims=True)
 
 # TODO
-def index_smoothing(arr_retn: array) -> array:
-    return log(
-        (
-            arr_retn.max(axis=0, keepdims=True) - 
-            arr_retn.min(axis=0, keepdims=True)
-        ) /
-        arr_retn.std(axis=0, keepdims=True)
-        ) / log(len(arr_retn))
+def index_smoothing(arr_retn: array, 
+                    neg_theta: bool = False,
+                    MAorder: int = 2) -> array:
+    if arr_retn.ndim == 1:
+        model = ARIMA(arr_retn, order=(0, 0, MAorder))
+        res = model.fit_constrained({"const":0})
+        coefma2 = res.polynomial_ma
+        if neg_theta == False:
+            for i in arange(1,len(coefma2)):
+                coefma2[i] = max(0, coefma2[i])
+        thetas = coefma2/coefma2.sum()
+        return square(thetas).sum(keepdims=True)
+    else:
+        return apply_along_axis(func1d=index_smoothing, axis=0, arr=arr_retn)
     
 # TODO needs draw down
 def index_ulcer(arr_retn: array) -> array:

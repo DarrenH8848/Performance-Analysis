@@ -1,4 +1,4 @@
-from numpy import array
+from numpy import array, multiply
 
 
 def return_active(
@@ -12,11 +12,18 @@ def return_active(
 # TODO
 def return_geltner(
     arr_ts: array, 
-    lst_idx_retn: list, 
-    lst_idx_bcmk: list, 
-    freq_reb: float = 252.0
     ) -> array:
-    return (arr_ts[:,lst_idx_retn] - arr_ts[:,lst_idx_bcmk]) * freq_reb
+    arr = arr_ts[1:]
+    arr_lag = arr_ts[0:-1]
+
+    cov = multiply(
+        arr-arr.mean(axis=0,keepdims=True),
+        arr_lag-arr_lag.mean(axis=0,keepdims=True)
+        ).mean(axis=0,keepdims=True)
+
+    rho = cov/arr.var(axis=0,keepdims=True)
+    
+    return (arr - arr_lag*rho)/(1-rho)
 
 # TODO
 # ~ maybe not necessary (might need simple retn)
