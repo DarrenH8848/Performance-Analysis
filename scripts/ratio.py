@@ -6,6 +6,7 @@ from numpy import (apply_along_axis, array, nanmean, nanstd, nansum, sqrt,
 from .capm import beta_capm
 from .risk import downside_dev, expected_shortfall, drawdown_max
 from .stat import kurtosis, skewness, index_pain, index_ulcer
+from .rolling import create_rolling_function
 
 
 def ratio_sharpe(
@@ -386,6 +387,19 @@ def ratio_upsidepotential(
     r_treynor *= freq_reb
     return r_treynor
 
+
+rolling_ratio_sharpe = create_rolling_function(ratio_sharpe)
+rolling_ratio_bernadoledoit = create_rolling_function(ratio_bernadoledoit)
+rolling_ratio_burke = create_rolling_function(ratio_burke)
+rolling_ratio_d = create_rolling_function(ratio_d)
+rolling_ratio_information = create_rolling_function(ratio_information)
+rolling_ratio_kappa = create_rolling_function(ratio_kappa)
+rolling_ratio_kelly = create_rolling_function(ratio_kelly)
+rolling_ratio_omega = create_rolling_function(ratio_omega)
+rolling_ratio_prospect = create_rolling_function(ratio_prospect)
+rolling_ratio_rachev = create_rolling_function(ratio_rachev)
+rolling_ratio_sortino = create_rolling_function(ratio_sortino)
+rolling_ratio_treynor = create_rolling_function(ratio_treynor)
 
     
 if __name__ == '__main__':
