@@ -5,8 +5,7 @@ from numpy import (apply_along_axis, array, nanmean, nanstd, nansum, sqrt,
 
 from .capm import beta_capm
 from .risk import downside_dev, expected_shortfall, drawdown_max
-from .stat import kurtosis, skewness, index_pain, index_ulcer
-from .rolling import create_rolling_function
+from .stat import kurtosis, skewness, index_pain, index_ulcer, create_rolling_function
 
 
 def ratio_sharpe(
