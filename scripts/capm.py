@@ -118,53 +118,55 @@ def epsilon_capm(
             )
         )
     
-    
-
 
 if __name__ == '__main__':
     import logging
 
+    from numpy import isfinite
+
     from scripts import *
     logging.basicConfig(level=logging.DEBUG)
     arr = data_test.values
-    N = data_test.shape[1]-2
-    # 
+    N = data_test.shape[1] - 2
+    #
+    tmp = alpha_capm(arr_ts=arr,
+                     lst_idx_retn=range(N),
+                     lst_idx_bcmk=[N],
+                     lst_idx_rf=[N + 1])
+    assert isfinite(tmp).all()
+    tmp = tmp.shape
     logging.log(level=logging.INFO, msg='alpha_capm')
-    tmp = alpha_capm(
-        arr_ts=arr, 
-        lst_idx_retn=range(N), 
-        lst_idx_bcmk=[N], 
-        lst_idx_rf=[N+1],
-        ).shape
     logging.log(level=logging.INFO, msg=tmp)
     assert tmp == (1, 14)
-    # 
-    logging.log(level=logging.INFO, msg='beta_capm')
-    tmp = beta_capm(
-        arr_ts=arr, 
-        lst_idx_retn=range(N), 
-        lst_idx_bcmk=[N], 
-        lst_idx_rf=[N+1],
-        ).shape
-    logging.log(level=logging.INFO, msg=tmp)
-    assert tmp == (1, 14)
-    # 
+    #
+    for method in ['all', 'bull', 'bear']:
+        tmp = beta_capm(arr_ts=arr,
+                        lst_idx_retn=range(N),
+                        lst_idx_bcmk=[N],
+                        lst_idx_rf=[N + 1],
+                        method=method)
+        assert isfinite(tmp).all()
+        tmp = tmp.shape
+        logging.log(level=logging.INFO, msg=f'beta_capm: {method}')
+        logging.log(level=logging.INFO, msg=tmp)
+        assert tmp == (1, 14)
+    #
+    tmp = ratio_timing(arr_ts=arr,
+                       lst_idx_retn=range(N),
+                       lst_idx_bcmk=[N],
+                       lst_idx_rf=[N + 1])
+    assert isfinite(tmp).all()
+    tmp = tmp.shape
     logging.log(level=logging.INFO, msg='ratio_timing')
-    tmp = ratio_timing(
-        arr_ts=arr, 
-        lst_idx_retn=range(N), 
-        lst_idx_bcmk=[N], 
-        lst_idx_rf=[N+1],
-        ).shape
     logging.log(level=logging.INFO, msg=tmp)
     assert tmp == (1, 14)
-    # 
+    #
+    tmp = epsilon_capm(arr_ts=arr,
+                       lst_idx_retn=range(N),
+                       lst_idx_bcmk=[N],
+                       lst_idx_rf=[N + 1])
+    assert isfinite(tmp).all()
+    tmp = tmp.shape
     logging.log(level=logging.INFO, msg='epsilon_capm')
-    tmp = epsilon_capm(
-        arr_ts=arr, 
-        lst_idx_retn=range(N), 
-        lst_idx_bcmk=[N], 
-        lst_idx_rf=[N+1],
-        ).shape
     logging.log(level=logging.INFO, msg=tmp)
     assert tmp == (1542, 14)

@@ -1,8 +1,12 @@
 # TODO: hypothesis tests: stationarity, unit root, cointegration
-from numpy import apply_along_axis, array, log, nanmean, sqrt, square, arange, empty, append
+from numpy import apply_along_axis, array, log, nanmean, sqrt, square, arange, empty, append, diff
 from statsmodels.tsa.arima.model import ARIMA
 from .risk import drawdown_peak
 from numpy.lib.stride_tricks import as_strided
+from scipy.stats import chi2
+from statsmodels.tsa.stattools import adfuller, kpss, bds, coint, breakvar_heteroskedasticity_test
+from statsmodels.stats.diagnostic import acorr_ljungbox
+from pandas import Series
 
 
 def kurtosis(arr_retn: array) -> array:
@@ -94,7 +98,137 @@ def create_rolling_function(function):
         return result
     return rolling
 
+def durbin_watson(arr_retn: array, 
+                  axis: int) -> array:
+    diff_retn = diff(arr_retn, 1, axis=axis)
+    dw = sum(diff_retn**2, axis=axis, keepdims=True) / sum(arr_retn**2, axis=axis, keepdims=True)
+    return dw
 
+def jarque_bera(arr_retn: array,
+                axis: int) -> tuple:
+    skew = skewness(arr_retn)
+    kurt = kurtosis(arr_retn)
+    n = arr_retn.shape[axis]
+    jb = (n / 6) * (skew ** 2 + 0.25 * kurt ** 2)
+    jb_pv = chi2.sf(jb, 2)
+
+    return jb, jb_pv, skew, kurt
+
+def adf_test(arr_retn: array,
+             res_show: bool = False) -> Series:
+    
+    dftest = adfuller(arr_retn, autolag="AIC")
+    adf_result = Series(
+        dftest[0:4],
+        index=[
+            "Test Statistic",
+            "p-value",
+            "#Lags Used",
+            "Number of Observations Used",
+        ],
+    )
+    for key, value in dftest[4].items():
+        adf_result["Critical Value (%s)" % key] = value
+        
+    if res_show:
+        print("Results of Dickey-Fuller Test:")
+        print(adf_result)
+
+    return adf_result
+
+def kpss_test(arr_retn: array,
+              res_show: bool = False) -> Series:
+
+    kpsstest = kpss(arr_retn, regression="c", nlags="auto")
+    kpss_result = Series(
+        kpsstest[0:3], 
+        index=[
+            "Test Statistic", 
+            "p-value", 
+            "Lags Used"
+        ]
+    )
+    for key, value in kpsstest[3].items():
+        kpss_result["Critical Value (%s)" % key] = value
+
+    if res_show:
+        print("Results of KPSS Test:")
+        print(kpss_result)
+    
+    return kpss_result
+
+def bds_test(arr_retn: array,
+             res_show: bool = False) -> Series:
+
+    bdstest = bds(arr_retn)
+    bds_result = Series(
+        bdstest[0:2], 
+        index=[
+            "Test Statistic", 
+            "p-value"
+        ]
+    )
+
+    if res_show:
+        print("Results of BDS Test:")
+        print(bds_result)
+    
+    return bds_result
+
+def heteroskedasticity_test(arr_retn: array,
+                            res_show: bool = False) -> Series:
+
+    hetertest = breakvar_heteroskedasticity_test(arr_retn)
+    heter_result = Series(
+        hetertest[0:2], 
+        index=[
+            "Test Statistic", 
+            "p-value"
+        ]
+    )
+
+    if res_show:
+        print("Results of heteroskedasticity Test:")
+        print(heter_result)
+    
+    return heter_result
+
+def ljung_box(arr_retn: array,
+              res_show: bool = False) -> Series:
+    lbtest = acorr_ljungbox(arr_retn)
+    lb_result = Series(
+        lbtest[0:2], 
+        index=[
+            "Test Statistic", 
+            "p-value"
+        ]
+    )
+
+    if res_show:
+        print("Results of ljung box Test:")
+        print(lb_result)
+    
+    return lb_result
+
+def coint_test(arr_retn: array,
+               remaining_arr: array,
+               res_show: bool = False) -> Series:
+    cointtest = coint(arr_retn, remaining_arr)
+    coint_result = Series(
+        cointtest[0:2], 
+        index=[
+            "Test Statistic", 
+            "p-value"
+        ]
+    )
+    for key, value in cointtest[2].items():
+        coint_result["Critical Value (%s)" % key] = value
+
+    if res_show:
+        print("Results of cointegration Test:")
+        print(coint_result)
+    
+    return coint_result
 
 if __name__ == '__main__':
     import logging
@@ -115,5 +249,22 @@ if __name__ == '__main__':
     # 
     tmp = index_hurst(arr).shape
     logging.log(level=logging.INFO, msg='index_hurst')
+    logging.log(level=logging.INFO, msg=tmp)
+    assert tmp == (1,16)
+    # 
+    tmp = index_pain(arr).shape
+    logging.log(level=logging.INFO, msg='index_pain')
+    logging.log(level=logging.INFO, msg=tmp)
+    assert tmp == (1,16)
+    #
+    tmp = index_smoothing(arr,
+                          neg_theta=False,
+                          MAorder=2).shape
+    logging.log(level=logging.INFO, msg='index_smoothing')
+    logging.log(level=logging.INFO, msg=tmp)
+    assert tmp == (1,16)
+    #
+    tmp = index_ulcer(arr).shape
+    logging.log(level=logging.INFO, msg='index_ulcer')
     logging.log(level=logging.INFO, msg=tmp)
     assert tmp == (1,16)
